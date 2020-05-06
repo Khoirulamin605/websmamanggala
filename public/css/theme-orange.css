@@ -1,0 +1,89 @@
+.header .separator {
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(60%, #7F4937), to(#FF916E));
+	background-image: linear-gradient(#7F4937 60%, #FF916E);
+}
+.page-header, .sidebar-left .sidebar-header .sidebar-toggle {
+	background: #f7f7ff;
+}
+.page-header h2 {
+	border-bottom-color: #FF5722;
+}
+.page-header .breadcrumbs a, 
+.page-header .breadcrumbs span,
+.page-header .breadcrumbs li,
+.page-header h2,
+.sidebar-left .sidebar-header .sidebar-toggle i,
+.sidebar-left .sidebar-header .sidebar-toggle:hover i {
+	color: #FF5722;
+}
+.header {
+	/*background: #04344B;*/
+	background: #FF5722;
+	border-bottom: 1px solid #7F4937;
+	border-top: 3px solid #7F4937;
+}
+.userbox.show .dropdown-menu {
+	background-color: #FF916E;
+}
+.userbox.show .dropdown-menu a:hover {
+	background: #ffb299;
+}
+.userbox.show .dropdown-menu a, 
+ul.nav-main li a, .userbox .role, 
+ul.nav-main > li.nav-active > a:hover, 
+.sidebar-widget .widget-header h6, 
+.sidebar-left .sidebar-header .sidebar-title, 
+.sidebar-widget .widget-header .widget-toggle, 
+ul.nav-main li.nav-parent > a::after,
+.sidebar-widget .widget-header h6, 
+.sidebar-left .sidebar-header .sidebar-title {
+	/*color: #FFF;*/
+	color: #04344B;
+}
+.sidebar-left .sidebar-header .sidebar-title, html.no-overflowscrolling .sidebar-left .nano {
+	/*background: #53D20A;*/
+	background: #f7f7ff;
+	/*background: #FF916E;*/
+}
+ul.nav-main > li > a:hover, 
+ul.nav-main > li > a:focus, 
+ul.nav-main > li.nav-expanded > a {
+	background-color: #c5c5cc;
+	/*background-color: #95FF59;*/
+}
+ul.nav-main li .nav-children, ul.nav-main li .nav-children li a:hover, ul.nav-main li .nav-children li a:focus {
+	/*background: #4B7F2C;*/
+	/*background: #e58263;*/
+	background: #acacb2;
+}
+.inner-wrapper {
+	background-color: #f7f7ff;
+}
+.table-striped tbody tr:nth-of-type(2n+1) {
+	background-color: #f7f7ff;
+}
+.input-group-text {
+	background-color: #f7f7ff;
+}
+.card-header {
+	background: #dedee5;
+}
+.card {
+	box-shadow: 5px 10px 18px #888888;
+}
+html.no-overflowscrolling .sidebar-left .nano {
+	/*background: #1D2127;*/
+	-webkit-box-shadow: -5px 0 0 #04344B inset;
+	box-shadow: -5px 0 0 #04344B inset;
+}
+@media only screen and (max-width: 767px) {
+	.header .logo-container {
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FF5722), color-stop(45%, #FFFFFF));
+		background-image: linear-gradient(#FF5722 0%, #FF5722 45%);
+		border-bottom: 1px solid #E9E9E6; 
+		border-top: initial; 
+	}
+}
+.header .header-right {
+	background: #FF5722;
+}
