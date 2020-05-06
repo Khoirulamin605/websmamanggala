@@ -183,7 +183,7 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <!-- <img src="{{ asset('assets') }}/images/users/1.jpg" alt="user" class="profile-pic" /> -->
                         <i class="mdi mdi-account profile-pic"></i>
-                        <span style="margin-left: 10px;font-size:10pt;font-weight:bold"><b>sdgahaet</b></span>
+                        <span style="margin-left: 10px;font-size:10pt;font-weight:bold"><b>{{Auth::user()->nama_pegawai}}</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right scale-up">
                         <ul class="dropdown-user">
@@ -192,9 +192,9 @@
                                     <div class="u-img"><img src="{{ asset('assets') }}/images/users/profile.svg" alt="user"></div>
                                     <!-- <div class="u-img"><i class="mdi mdi-account"></i></div> -->
                                     <div class="u-text">
-                                        <h4 class="mt-2">sdfagear</h4>
-                                        <p class="text-muted">aereeeat</p>
-                                        <p class="text-muted">eryayraey</p>
+                                        <h4 class="mt-2">{{Auth::user()->nama_pegawai}}</h4>
+                                        <p class="text-muted">{{Auth::user()->email}}</p>
+                                        <p class="text-muted">Admin</p>
                                     </div>
                                 </div>
                             </li>

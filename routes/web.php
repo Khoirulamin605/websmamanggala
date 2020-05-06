@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
-Route::get('/dashboard', function () {
-    return view('page.dashboard');
-});
-Route::get('/coba1', function () {
-    return view('page.dashboard');
+Route::get('logout', 'Auth\LoginController@logout');
+Route::post('loginuser', 'Auth\LoginController@goLogin');
+Auth::routes();
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('page.dashboard');
+    });
+    Route::get('/home', function () {
+        return view('page.dashboard');
+    })->name('home');
 });
