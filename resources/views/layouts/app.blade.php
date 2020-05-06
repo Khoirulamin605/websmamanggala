@@ -11,7 +11,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets') }}/images/otu.svg">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets') }}/images/manggala.png">
     <title>Sim Admin !</title>
     <!-- Bootstrap Core CSS -->
     {{-- <link href="{{ asset('assets') }}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"> --}}
@@ -73,7 +73,10 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-
+    @guest
+    @yield('content')
+    @endguest
+    @auth
     <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
@@ -134,6 +137,7 @@
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
+    @endauth
 
     <!-- ============================================================== -->
     <!-- End Wrapper -->

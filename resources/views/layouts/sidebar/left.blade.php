@@ -7,13 +7,13 @@
                 <li class="nav-small-cap pb-0 text-center">SIM Admin</li>
                 <li class="nav-devider"></li>
                 <li>
-                    <a href="/home"><i class="mdi mdi-desktop-mac"></i>Dashboard</a>
+                    <a href="/dashboard"><i class="mdi mdi-desktop-mac"></i>Dashboard</a>
                 </li>
                 <li>
                     <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Coba</span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li>
-                                    <a href="/coba">Coba1</a>
+                                    <a href="/coba1">Coba1</a>
                             </li>
                         </ul>
                 </li>
