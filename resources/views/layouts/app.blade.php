@@ -12,7 +12,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets') }}/images/manggala.png">
-    <title>Sim Admin !</title>
+    <title>SIM Admin !</title>
     <!-- Bootstrap Core CSS -->
     {{-- <link href="{{ asset('assets') }}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link href="{{ asset('assets') }}/css/bootstrap.min.css" rel="stylesheet">
@@ -28,6 +28,7 @@
     <link href="{{ asset('assets') }}/css/style.css" rel="stylesheet">
     <link href="{{ asset('assets') }}/magnific-popup/magnific-popup.css" rel="stylesheet">
     <link href="{{ asset('assets') }}/css/custom.css" id="theme" rel="stylesheet">
+    <link href="{{ asset('assets') }}/css/select2.min.css" id="theme" rel="stylesheet">
 
     <!-- Color picker plugins css -->
     <link href="{{ asset('assets') }}/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
@@ -60,6 +61,7 @@
     <![endif]-->
     <!-- daterangepicker CSS -->
     <link href="{{ asset('assets') }}/css/daterangepicker.css" rel="stylesheet">
+    <!-- <link href="{{ asset('assets') }}/css/select2.min.css" id="theme" rel="stylesheet"> -->
     @stack('styles')
 </head>
 <body class="fix-header fix-sidebar card-no-border">
@@ -174,7 +176,7 @@
     <script src="{{ asset('assets') }}/plugins/d3/d3.min.js"></script>
     <script src="{{ asset('assets') }}/plugins/c3-master/c3.min.js"></script>
     <!-- Chart JS -->
-    <script src="{{ asset('assets') }}/js/dashboard1.js"></script>
+    <!-- <script src="{{ asset('assets') }}/js/dashboard1.js"></script> -->
     <!-- Datatable -->
     <script src="{{ asset('assets') }}/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('assets') }}/js/dataTables.bootstrap4.min.js"></script>
@@ -200,6 +202,7 @@
     <script src="{{ asset('assets') }}/js/vfs_fonts.js"></script>
     <script src="{{ asset('assets') }}/js/buttons.html5.min.js"></script>
     <script src="{{ asset('assets') }}/js/buttons.print.min.js"></script>
+    <script src="{{ asset('assets') }}/js/select2.min.js"></script>
     <script>
         $.ajaxSetup({
             headers: {

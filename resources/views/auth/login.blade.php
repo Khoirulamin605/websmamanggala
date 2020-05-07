@@ -60,6 +60,11 @@
             $("#buttonLogin").click();
         }
     });
+    $("#email").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#buttonLogin").click();
+        }
+    });
 </script>
 <script>
     // function hideModal(){

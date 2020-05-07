@@ -26,5 +26,33 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::get('/home', function () {
         return view('page.dashboard');
-    })->name('home');
+    });
+
+    // Data Siswa
+    Route::get('/siswa/siswa_aktif', function () {
+        return view('page.siswa.list_siswa');
+    });
+    Route::post('/siswa/get_siswa_aktif', 'Siswa\ListSiswaController@getDataSiswaAktif');
+    Route::post('/siswa/insert_siswa', 'Siswa\ListSiswaController@insertDataSiswa');
+    Route::post('/siswa/update_siswa', 'Siswa\ListSiswaController@updateDataSiswa');
+    Route::post('/siswa/siswa_keluar', 'Siswa\ListSiswaController@pindahkanSiswa');
+    Route::get('/siswa/delete_siswa/{id}', 'Siswa\ListSiswaController@deleteSiswa');
+    Route::post('/siswa/import_data', 'Siswa\ListSiswaController@importData');
+
+
+    // Data Sekolah
+    Route::get('/sekolah/jurusan', function () {
+        return view('page.sekolah.jurusan');
+    });
+    Route::post('/sekolah/get_jurusan', 'Sekolah\JurusanController@getDataJurusan');
+    Route::get('/sekolah/get_all_jurusan', 'Sekolah\JurusanController@getDataJurusanAll');
+    Route::post('/sekolah/insert_jurusan', 'Sekolah\JurusanController@insertJurusan');
+    Route::post('/sekolah/update_jurusan', 'Sekolah\JurusanController@updateJurusan');
+    Route::get('/sekolah/get_jurusan_by_id/{id}', 'Sekolah\JurusanController@getJurusanById');
+    Route::get('/sekolah/delete_jurusan/{id}', 'Sekolah\JurusanController@deleteJurusan');
+
+
+    // Data Pegawai
+    Route::get('/pegawai/get_all_pegawai', 'Pegawai\PegawaiController@getAllPegawai');
+    Route::get('/pegawai/get_pegawai_by_id/{id}', 'Pegawai\PegawaiController@getPegawaiById');
 });
