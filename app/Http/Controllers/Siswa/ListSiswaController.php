@@ -27,10 +27,10 @@ class ListSiswaController{
         $dir   = $request->input('order.0.dir');
         
         if(empty($request->input('search.value'))){
-            $data_search = DB::table('siswa')->orderBy($order, $dir);
+            $data_search = DB::table('v_siswa_aktif')->orderBy($order, $dir);
         }else{
             $search = $request->input('search.value');
-            $data_search = DB::table('siswa')
+            $data_search = DB::table('v_siswa_aktif')
             ->where('no_induk', 'like', "%{$search}%")
             ->orWhere('nama_siswa', 'like', "%{$search}%")
             ->orWhere('tempat_lahir', 'like', "%{$search}%")
@@ -78,6 +78,70 @@ class ListSiswaController{
         ));
     }
 
+    public function getDataSiswaNonAktif(Request $request){
+
+        $columns = array(
+            0 =>'no_induk',
+            1 =>'no_induk',
+            2 =>'nama_siswa',
+            3 =>'tempat_lahir',
+            4 =>'jenis_kelamin',
+            5 =>'alamat',
+            6 =>'wali',
+            7 =>'kelas',
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir   = $request->input('order.0.dir');
+        
+        if(empty($request->input('search.value'))){
+            $data_search = DB::table('v_siswa_inactive')->orderBy($order, $dir);
+        }else{
+            $search = $request->input('search.value');
+            $data_search = DB::table('v_siswa_inactive')
+            ->where('no_induk', 'like', "%{$search}%")
+            ->orWhere('nama_siswa', 'like', "%{$search}%")
+            ->orWhere('tempat_lahir', 'like', "%{$search}%")
+            ->orWhere('jenis_kelamin', 'like', "%{$search}%")
+            ->orWhere('alamat', 'like', "%{$search}%")
+            ->orWhere('wali', 'like', "%{$search}%")
+            ->orWhere('kelas', 'like', "%{$search}%")
+            ->orderBy($order, $dir);
+        }
+
+        $totaldata = count($data_search->get());
+        $posts = $data_search
+                    ->offset($start)
+                    ->limit($limit)
+                    ->get();
+        $totalFiltered = $totaldata;
+
+        $data = array();
+        if($posts){
+            foreach($posts as $row){
+
+                $nestedData['no_induk'] =  $row->no_induk;
+                $nestedData['nama_siswa'] =  $row->nama_siswa;
+                $nestedData['lahir'] =  $row->tempat_lahir.', '.$row->tanggal_lahir;
+                $nestedData['alamat'] =  $row->alamat;
+                $nestedData['jenis_kelamin'] =  $row->jenis_kelamin;
+                $nestedData['wali'] =  $row->wali;
+                $nestedData['kelas'] =  $row->kelas;
+                $nestedData['action'] =  "<button class='btn btn-outline-success btn-sm' data-toggle='modal'
+                                            onClick=\"setData('$row->no_induk','$row->nama_siswa','$row->tempat_lahir','$row->tanggal_lahir','$row->jenis_kelamin','$row->alamat','$row->kelas','$row->nama_jurusan','$row->status_aktif','$row->wali','$row->tanggal_keluar')\"
+                                            data-target='#viewSiswa'>Lihat Detail</button>";
+                $data[] = $nestedData;
+            }
+        }
+
+        echo json_encode(array(
+            "draw"              => intval($request->input('draw')),
+            "recordsTotal"      => intval($totaldata),
+            "recordsFiltered"   => intval($totalFiltered),
+            "data"              => $data
+        ));
+    }
 
     public function insertDataSiswa(Request $request){
         date_default_timezone_set("Asia/Jakarta");
