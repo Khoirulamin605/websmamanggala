@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <section id="wrapper">
-<div class="login-register" style="background-image:url({{ asset('assets') }}/images/background/login-register.jpg);">
+<div class="login-register" style="background-image:url({{ asset('assets') }}/images/background/login-register1.jpg);">
     <div class="login-box card">
         <div class="card-body">
             <div class="form-horizontal form-material">
@@ -56,6 +56,11 @@
 @push('scripts')
 <script>
     $("#password").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#buttonLogin").click();
+        }
+    });
+    $("#email").keyup(function(event){
         if(event.keyCode == 13){
             $("#buttonLogin").click();
         }

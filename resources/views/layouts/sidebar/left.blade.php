@@ -10,10 +10,27 @@
                     <a href="/dashboard"><i class="mdi mdi-desktop-mac"></i>Dashboard</a>
                 </li>
                 <li>
-                    <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Coba</span></a>
+                    <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bank"></i><span class="hide-menu">Sekolah</span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li>
-                                    <a href="/coba1">Coba1</a>
+                                <a href="/sekolah/data_sekolah">Data Sekolah</a>
+                            </li>
+                            <li>
+                                <a href="/sekolah/jurusan">Jurusan</a>
+                            </li>
+                            <li>
+                                <a href="/sekolah/rombel">Rombongan Belajar</a>
+                            </li>
+                        </ul>
+                </li>
+                <li>
+                    <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-school"></i><span class="hide-menu">Data Siswa</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li>
+                                <a href="/siswa/siswa_aktif">Siswa Aktif</a>
+                            </li>
+                            <li>
+                                <a href="/siswa/siswa_non_aktif">Siswa Non-Aktif</a>
                             </li>
                         </ul>
                 </li>

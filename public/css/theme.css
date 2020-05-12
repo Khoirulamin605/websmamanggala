@@ -9055,7 +9055,7 @@ html.dark .radio-dark input[type="radio"]:checked + label:after,
 }
 
 .select2-container--bootstrap .select2-selection--multiple .select2-selection__rendered {
-	line-height: 1.8;
+	line-height: 2;
 }
 
 @media (max-width: 991px) {
