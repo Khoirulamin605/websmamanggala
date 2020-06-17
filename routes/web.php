@@ -64,6 +64,18 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Data Pegawai
+    Route::get('/pegawai', function () {
+        return view('page.pegawai.pegawai');
+    });
     Route::get('/pegawai/get_all_pegawai', 'Pegawai\PegawaiController@getAllPegawai');
     Route::get('/pegawai/get_pegawai_by_id/{id}', 'Pegawai\PegawaiController@getPegawaiById');
+
+    // Jabatan Pegawai
+    Route::get('/pegawai/jabatan', function () {
+        return view('page.pegawai.jabatan');
+    });
+    Route::post('/jabatan/get_all_jabatan', 'Pegawai\JabatanController@getAllJabatan');
+    Route::post('/jabatan/insert_jabatan', 'Pegawai\JabatanController@insertJabatan');
+    Route::post('/jabatan/update_jabatan', 'Pegawai\JabatanController@updateJabatan');
+    Route::get('/jabatan/hapus_jabatan/{id}', 'Pegawai\JabatanController@deleteJabatan');
 });

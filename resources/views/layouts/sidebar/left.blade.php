@@ -24,6 +24,23 @@
                         </ul>
                 </li>
                 <li>
+                    <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-account-box-outline"></i><span class="hide-menu">Data Pegawai</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li>
+                                <a href="/pegawai/jabatan">Jabatan</a>
+                            </li>
+                            <li>
+                                <a href="/pegawai/">Data Pegawai</a>
+                            </li>
+                            <li>
+                                <a href="/pegawai/">Penggajian</a>
+                            </li>
+                            <li>
+                                <a href="/pegawai/">Absensi</a>
+                            </li>
+                        </ul>
+                </li>
+                <li>
                     <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-school"></i><span class="hide-menu">Data Siswa</span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li>
