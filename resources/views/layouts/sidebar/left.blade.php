@@ -30,13 +30,13 @@
                                 <a href="/pegawai/jabatan">Jabatan</a>
                             </li>
                             <li>
-                                <a href="/pegawai/">Data Pegawai</a>
+                                <a href="/pegawai">Data Pegawai</a>
                             </li>
                             <li>
-                                <a href="/pegawai/">Penggajian</a>
+                                <a href="/pegawai/penggajian">Penggajian</a>
                             </li>
                             <li>
-                                <a href="/pegawai/">Absensi</a>
+                                <a href="/pegawai/absensi">Absensi</a>
                             </li>
                         </ul>
                 </li>

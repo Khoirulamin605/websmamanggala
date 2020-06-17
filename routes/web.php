@@ -64,10 +64,12 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Data Pegawai
-    Route::get('/pegawai', function () {
-        return view('page.pegawai.pegawai');
-    });
+    Route::get('/pegawai', 'Pegawai\PegawaiController@index' );
+    Route::post('/pegawai/get_pegawai', 'Pegawai\PegawaiController@dataPegawai');
+    Route::post('/pegawai/insert_pegawai', 'Pegawai\PegawaiController@insertPegawai');
+    Route::post('/pegawai/update_pegawai', 'Pegawai\PegawaiController@updatePegawai');
     Route::get('/pegawai/get_all_pegawai', 'Pegawai\PegawaiController@getAllPegawai');
+    Route::get('/pegawai/hapus_pegawai/{id}', 'Pegawai\PegawaiController@deletePegawai');
     Route::get('/pegawai/get_pegawai_by_id/{id}', 'Pegawai\PegawaiController@getPegawaiById');
 
     // Jabatan Pegawai
