@@ -36,8 +36,8 @@ class KelasController{
                 $nestedData['tahun_ajar'] =  $row->tahun_ajar;
                 $nestedData['semester'] =  $semester;
                 $nestedData['action'] = "<button class='btn btn-outline-warning btn-sm' 
-                                        onClick=\"setData('$row->id')\"
-                                        data-toggle='modal' data-target='#updateDataDosen'>Edit</button>
+                                        onClick=\"setData('$row->id','$row->nama_kelas','$row->jurusan','$row->rombel','$row->wali_kelas','$row->status','$row->tahun_ajar','$row->semester')\"
+                                        data-toggle='modal' data-target='#updateData'>Edit</button>
                                         <button class='btn btn-outline-danger btn-sm' onClick=\"hapusData('$row->id')\">Hapus</button>";
                 $data[] = $nestedData;
             }
@@ -48,7 +48,56 @@ class KelasController{
         ));
     }
 
+    public function updatePegawaiTugas($id){
+        DB::table('pegawai')->where('nama_pegawai', $id)->update([
+            'tugas_tambahan' => ''
+        ]);
+        $respError = TRUE;
+        $respMesssage = 'Update data kelas berhasil';
+        $response = array(
+            'status' => $respError,
+            'message' => $respMesssage
+        );
+
+        return response()->json($response);
+    }
+    public function update(Request $request){
+        DB::table('pegawai')->where('nama_pegawai', $request->wali_kelas)->update([
+            'tugas_tambahan' => 'Wali Kelas'
+        ]);
+        $result = DB::table('kelas')->where('id', $request->id)->update([
+            'jurusan' => $request->jurusan,
+            'nama_kelas' => $request->nama_kelas,
+            'rombel' => $request->rombel,
+            'wali_kelas' => $request->wali_kelas,
+            'status' => $request->status,
+            'tahun_ajar' => $request->tahun_ajar,
+            'semester' => $request->semester
+        ]);
+
+
+        $respError = FALSE;
+        $respMesssage = '';
+
+
+        if($result){
+            $respError = TRUE;
+            $respMesssage = 'Update data kelas berhasil';
+        }else{
+            $respMesssage = 'Terjadi kesalahan saat Update data';
+        }
+
+        $response = array(
+            'status' => $respError,
+            'message' => $respMesssage
+        );
+
+        return response()->json($response);
+    }
     public function insert(Request $request){
+        DB::table('pegawai')->where('nama_pegawai', $request->wali_kelas)->update([
+            'tugas_tambahan' => 'Wali Kelas'
+        ]);
         $result = DB::table('kelas')->insert([
             'jurusan' => $request->jurusan,
             'nama_kelas' => $request->nama_kelas,

@@ -21,6 +21,15 @@
                             <li>
                                 <a href="/sekolah/rombel">Rombongan Belajar</a>
                             </li>
+                            {{-- <li>
+                                <a href="/sekolah/anggota_rombel">Anggota Rombel</a>
+                            </li> --}}
+                            <li>
+                                <a href="/sekolah/spp">Pembayaran SPP</a>
+                            </li>
+                            <li>
+                                <a href="/sekolah/mapel">Mata Pelajaran</a>
+                            </li>
                         </ul>
                 </li>
                 <li>

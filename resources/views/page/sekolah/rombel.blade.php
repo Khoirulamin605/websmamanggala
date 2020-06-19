@@ -49,7 +49,6 @@
             <div class="modal-content">
                 <form id="form-insert" action="/sekolah/insert_kelas">
 			        {{ csrf_field() }}
-                    <input type="hidden" name="id" id="id">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addDataLabel">Form Insert Data Rombongan Belajar</h5>
                         <button type="button" class="close" data-dismiss="modal" onclick="clearForm('form-insert')" aria-label="Close">
@@ -112,6 +111,76 @@
             </div>
         </div>
     </div>
+
+        <!-- Modal Update -->
+        <div class="modal fade" id="updateData" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="updateDataLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form id="form-update" action="/sekolah/update_kelas">
+                        {{ csrf_field() }}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateDataLabel">Form Update Data Kelas</h5>
+                            <button type="button" class="close" data-dismiss="modal" onclick="clearForm('form-update')" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="id">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Kelas</label>
+                                <select class="form-control" name="nama_kelas" id="nama_kelas">
+                                    <option value="Kelas X">Kelas X</option>
+                                    <option value="Keals XI">Keals XI</option>
+                                    <option value="Keals XII">Keals XII</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nama Jurusan</label>
+                                <select class="form-control" style="width:100%;" name="jurusan" id="jurusan">
+                                    @foreach ($jurusan1 as $jurusan1)
+                                        <option value="{{$jurusan1->jurusan}}">{{$jurusan1->jurusan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Wali Kelas</label>
+                                <select class="form-control" style="width:100%;" name="wali_kelas" id="wali_kelas1">
+                                    @foreach ($wali_kelas1 as $wali_kelas1)
+                                        <option value="{{$wali_kelas1->nama_pegawai}}">{{$wali_kelas1->nama_pegawai}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Status</label>
+                                <select class="form-control" name="status" id="status">
+                                    <option value="Active">Active</option>
+                                    <option value="Non-Active">Non-Active</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nama Rombongan Belajar</label>
+                                <input type="text" name="rombel" id="rombel" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tahun Ajaran</label>
+                                <input type="text" name="tahun_ajar" id="tahun_ajar" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Semester</label>
+                                <select class="form-control" name="semester" id="semester">
+                                    <option value="I">Genap</option>
+                                    <option value="II">Ganjil</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="clearForm('form-update')" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 @endsection
 
 @push('scripts')
@@ -140,10 +209,45 @@
             ]
         });
         $('#wali_kelas').select2();
+        $('#wali_kelas1').select2();
     });
     function clearForm(data){
         document.getElementById(data).reset();
     }
+    $('#form-update').on('submit',function(e){
+        e.preventDefault()
+        var form = $(this)
+        var url = form.attr('action')
+        $.ajax({
+            type : "POST",
+            url : url,
+            data: form.serialize(),
+            success: function(data){
+                if(data.status){
+                    Swal.fire({
+                        title: 'Sukses',
+                        text: data.message,
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick :false,
+                    }).then((result) => {
+                        if (result.value) {
+                            $('#data_tables').DataTable().ajax.reload();
+                            clearForm('form-update');
+                            $('#updateData').modal('hide');
+                        }
+                    })
+                }else{
+                    Swal.fire(
+                        'Gagal',
+                        data.message,
+                        'error'
+                    )
+                }
+            }
+        })
+    });
     $('#form-insert').on('submit',function(e){
         e.preventDefault()
         var form = $(this)
@@ -214,6 +318,19 @@
                 });
             }
         })
+    }
+    function setData(data1, data2, data3, data4, data5, data6, data7, data8){ 
+        $.get(`/sekolah/update_status_pegawai/${data5}`, function(data){
+            console.log(data)
+        });
+        $("#id").val(data1);
+        $("#nama_kelas").val(data2);
+        $("#jurusan").val(data3);
+        $("#wali_kelas1").val(data5);
+        $("#status").val(data6);
+        $("#rombel").val(data4);
+        $("#tahun_ajar").val(data7);
+        $("#semester").val(data8);
     }
 </script>
 @endpush

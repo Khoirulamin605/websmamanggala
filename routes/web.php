@@ -60,7 +60,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sekolah/rombel', 'Sekolah\KelasController@index');
     Route::post('/sekolah/get_kelas', 'Sekolah\KelasController@get');
     Route::post('/sekolah/insert_kelas', 'Sekolah\KelasController@insert');
+    Route::post('/sekolah/update_kelas', 'Sekolah\KelasController@update');
     Route::get('/sekolah/delete_kelas/{id}', 'Sekolah\KelasController@delete');
+    Route::get('/sekolah/update_status_pegawai/{id}', 'Sekolah\KelasController@updatePegawaiTugas');
 
 
     // Data Pegawai
@@ -80,4 +82,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/jabatan/insert_jabatan', 'Pegawai\JabatanController@insertJabatan');
     Route::post('/jabatan/update_jabatan', 'Pegawai\JabatanController@updateJabatan');
     Route::get('/jabatan/hapus_jabatan/{id}', 'Pegawai\JabatanController@deleteJabatan');
+
+
+    // Mapel
+    Route::get('/sekolah/mapel', 'Sekolah\MapelController@index');
 });
