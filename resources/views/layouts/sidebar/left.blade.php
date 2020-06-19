@@ -60,6 +60,17 @@
                             </li>
                         </ul>
                 </li>
+                <li>
+                    <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Laporan</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li>
+                                <a href="/laporan/keuangan">Laporan Keuangan</a>
+                            </li>
+                            <li>
+                                <a href="/laporan/nilai_siswa">Laporan Nilai Siswa</a>
+                            </li>
+                        </ul>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

@@ -112,75 +112,75 @@
         </div>
     </div>
 
-        <!-- Modal Update -->
-        <div class="modal fade" id="updateData" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="updateDataLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <form id="form-update" action="/sekolah/update_kelas">
-                        {{ csrf_field() }}
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="updateDataLabel">Form Update Data Kelas</h5>
-                            <button type="button" class="close" data-dismiss="modal" onclick="clearForm('form-update')" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
+    <!-- Modal Update -->
+    <div class="modal fade" id="updateData" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="updateDataLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="form-update" action="/sekolah/update_kelas">
+                    {{ csrf_field() }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateDataLabel">Form Update Data Kelas</h5>
+                        <button type="button" class="close" data-dismiss="modal" onclick="clearForm('form-update')" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kelas</label>
+                            <select class="form-control" name="nama_kelas" id="nama_kelas">
+                                <option value="Kelas X">Kelas X</option>
+                                <option value="Keals XI">Keals XI</option>
+                                <option value="Keals XII">Keals XII</option>
+                            </select>
                         </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="id" id="id">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Kelas</label>
-                                <select class="form-control" name="nama_kelas" id="nama_kelas">
-                                    <option value="Kelas X">Kelas X</option>
-                                    <option value="Keals XI">Keals XI</option>
-                                    <option value="Keals XII">Keals XII</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Nama Jurusan</label>
-                                <select class="form-control" style="width:100%;" name="jurusan" id="jurusan">
-                                    @foreach ($jurusan1 as $jurusan1)
-                                        <option value="{{$jurusan1->jurusan}}">{{$jurusan1->jurusan}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Wali Kelas</label>
-                                <select class="form-control" style="width:100%;" name="wali_kelas" id="wali_kelas1">
-                                    @foreach ($wali_kelas1 as $wali_kelas1)
-                                        <option value="{{$wali_kelas1->nama_pegawai}}">{{$wali_kelas1->nama_pegawai}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Status</label>
-                                <select class="form-control" name="status" id="status">
-                                    <option value="Active">Active</option>
-                                    <option value="Non-Active">Non-Active</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Nama Rombongan Belajar</label>
-                                <input type="text" name="rombel" id="rombel" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Tahun Ajaran</label>
-                                <input type="text" name="tahun_ajar" id="tahun_ajar" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Semester</label>
-                                <select class="form-control" name="semester" id="semester">
-                                    <option value="I">Genap</option>
-                                    <option value="II">Ganjil</option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Jurusan</label>
+                            <select class="form-control" style="width:100%;" name="jurusan" id="jurusan">
+                                @foreach ($jurusan1 as $jurusan1)
+                                    <option value="{{$jurusan1->jurusan}}">{{$jurusan1->jurusan}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick="clearForm('form-update')" data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Wali Kelas</label>
+                            <select class="form-control" style="width:100%;" name="wali_kelas" id="wali_kelas1">
+                                @foreach ($wali_kelas1 as $wali_kelas1)
+                                    <option value="{{$wali_kelas1->nama_pegawai}}">{{$wali_kelas1->nama_pegawai}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value="Active">Active</option>
+                                <option value="Non-Active">Non-Active</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Rombongan Belajar</label>
+                            <input type="text" name="rombel" id="rombel" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tahun Ajaran</label>
+                            <input type="text" name="tahun_ajar" id="tahun_ajar" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Semester</label>
+                            <select class="form-control" name="semester" id="semester">
+                                <option value="I">Genap</option>
+                                <option value="II">Ganjil</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearForm('form-update')" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 @endsection
 
 @push('scripts')

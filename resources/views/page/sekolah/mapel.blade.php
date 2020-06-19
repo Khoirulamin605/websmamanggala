@@ -42,9 +42,267 @@
         </div>
     </div>
 
+    <!-- Modal Insert -->
+    <div class="modal fade" id="addData" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addDataLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="form-insert" action="/sekolah/insert_mapel">
+			        {{ csrf_field() }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDataLabel">Form Insert Data Mata Pelajaran</h5>
+                        <button type="button" class="close" data-dismiss="modal" onclick="clearForm('form-insert')" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Mapel</label>
+                            <input type="text" name="nama_mapel" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Jurusan</label>
+                            <select class="form-control" style="width:100%;" name="jurusan">
+                                @foreach ($jurusan as $jurusan)
+                                    <option value="{{$jurusan->jurusan}}">{{$jurusan->jurusan}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kelas</label>
+                            <select class="form-control" name="kelas">
+                                <option value="Kelas X">Kelas X</option>
+                                <option value="Keals XI">Keals XI</option>
+                                <option value="Keals XII">Keals XII</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Guru Pengampu</label>
+                            <select class="form-control" style="width:100%;" name="pengajar" id="pengajar">
+                                @foreach ($wali_kelas as $wali_kelas)
+                                    <option value="{{$wali_kelas->nama_pegawai}}">{{$wali_kelas->nama_pegawai}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select class="form-control" name="status">
+                                <option value="Active">Active</option>
+                                <option value="Non-Active">Non-Active</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearForm('form-insert')" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Update -->
+    <div class="modal fade" id="updateData" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="updateDataLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="form-update" action="/sekolah/update_mapel">
+                    {{ csrf_field() }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateDataLabel">Form Update Data Mata Pelajaran</h5>
+                        <button type="button" class="close" data-dismiss="modal" onclick="clearForm('form-update')" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Mapel</label>
+                            <input type="text" name="nama_mapel" id="nama_mapel" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Jurusan</label>
+                            <select class="form-control" style="width:100%;" name="jurusan" id="jurusan">
+                                @foreach ($jurusan1 as $jurusan1)
+                                    <option value="{{$jurusan1->jurusan}}">{{$jurusan1->jurusan}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kelas</label>
+                            <select class="form-control" name="kelas" id="kelas">
+                                <option value="Kelas X">Kelas X</option>
+                                <option value="Keals XI">Keals XI</option>
+                                <option value="Keals XII">Keals XII</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Guru Pengampu</label>
+                            <select class="form-control" style="width:100%;" name="pengajar" id="pengajar1">
+                                @foreach ($wali_kelas1 as $wali_kelas1)
+                                    <option value="{{$wali_kelas1->nama_pegawai}}">{{$wali_kelas1->nama_pegawai}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value="Active">Active</option>
+                                <option value="Non-Active">Non-Active</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearForm('form-update')" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 @push('scripts')
 <script>
+    $(document).ready(function() {
+        $('#data_tables').DataTable({
+            lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
+            "processing": true,
+            "serverSide": true,
+            // "searching": false,
+            "ajax": {
+                "url" : "/sekolah/get_mapel",
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    "_token": "<?= csrf_token()?>"
+                }
+            },
+            "columns" : [
+                {"data": "action"},
+                {"data": "nama_mapel"},
+                {"data": "jurusan"},
+                {"data": "kelas"},
+                {"data": "guru_pengajar"},
+                {"data": "status"},
+            ]
+        });
+        $('#pengajar').select2();
+        $('#pengajar1').select2();
+    });
+    function clearForm(data){
+        document.getElementById(data).reset();
+    }
+    $('#form-update').on('submit',function(e){
+        e.preventDefault()
+        var form = $(this)
+        var url = form.attr('action')
+        $.ajax({
+            type : "POST",
+            url : url,
+            data: form.serialize(),
+            success: function(data){
+                if(data.status){
+                    Swal.fire({
+                        title: 'Sukses',
+                        text: data.message,
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick :false,
+                    }).then((result) => {
+                        if (result.value) {
+                            $('#data_tables').DataTable().ajax.reload();
+                            clearForm('form-update');
+                            $('#updateData').modal('hide');
+                        }
+                    })
+                }else{
+                    Swal.fire(
+                        'Gagal',
+                        data.message,
+                        'error'
+                    )
+                }
+            }
+        })
+    });
+    $('#form-insert').on('submit',function(e){
+        e.preventDefault()
+        var form = $(this)
+        var url = form.attr('action')
+        $.ajax({
+            type : "POST",
+            url : url,
+            data: form.serialize(),
+            success: function(data){
+                if(data.status){
+                    Swal.fire({
+                        title: 'Sukses',
+                        text: data.message,
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick :false,
+                    }).then((result) => {
+                        if (result.value) {
+                            $('#data_tables').DataTable().ajax.reload();
+                            clearForm('form-insert');
+                            $('#addData').modal('hide');
+                        }
+                    })
+                }else{
+                    Swal.fire(
+                        'Gagal',
+                        data.message,
+                        'error'
+                    )
+                }
+            }
+        })
+    })
+    function hapusData(id){
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: "Apakah anda yakin mau menghapus data ini ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor:'#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value) {
+                $.get(`/sekolah/delete_mapel/${id}`, function(data){
+                    if(data.status){
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: data.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            allowOutsideClick :false,
+                        }).then((result) => {
+                            if (result.value) {
+                                $('#data_tables').DataTable().ajax.reload();
+                            }
+                        })
+                    }else{
+                        Swal.fire(
+                            'Gagal',
+                            data.message,
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+    }
+    function setData(data1, data2, data3, data4, data5, data6){ 
+        $("#id").val(data1);
+        $("#nama_mapel").val(data2);
+        $("#jurusan").val(data3);
+        $("#kelas").val(data4);
+        $("#pengajar1").val(data5);
+        $("#status").val(data6);
+    }
 </script>
 @endpush

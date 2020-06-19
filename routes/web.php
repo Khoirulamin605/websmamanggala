@@ -86,4 +86,14 @@ Route::middleware(['auth'])->group(function () {
 
     // Mapel
     Route::get('/sekolah/mapel', 'Sekolah\MapelController@index');
+    Route::post('/sekolah/get_mapel', 'Sekolah\MapelController@mapel');
+    Route::post('/sekolah/insert_mapel', 'Sekolah\MapelController@insertMapel');
+    Route::post('/sekolah/update_mapel', 'Sekolah\MapelController@updateMapel');
+    Route::get('/sekolah/delete_mapel/{id}', 'Sekolah\MapelController@delete');
+
+    // SPP
+    Route::get('/sekolah/spp', 'Sekolah\SPPController@index');
+    Route::post('/sekolah/get_spp', 'Sekolah\SPPController@spp');
+    Route::post('/sekolah/generate_spp', 'Sekolah\SPPController@generate');
+    Route::get('/sekolah/lunas_spp/{id}', 'Sekolah\SPPController@getLunas');
 });
