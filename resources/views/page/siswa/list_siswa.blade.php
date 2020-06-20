@@ -19,12 +19,36 @@
     <!-- Content -->
     <!-- ============================================================== -->
     <div class="p-10" style="background-color:white;">
+        <button type="" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addData"><i class="mdi mdi-plus mr-2"></i> Tambah </button>
+        <button type="" class="btn btn-success mt-2" data-toggle="modal" data-target="#importData"><i class="mdi mdi-file-excel mr-2"></i> Import </button>
+        <div class="row m-0">
+            <div class="col-sm-3 pt-2">
+                <select class="form-control" id="search_jurusan">
+                    <option selected value="">--- Pilih Jurusan ---</option>
+                    @foreach ($jurusan as $jurusan)
+                        <option value="{{$jurusan->id}}">{{$jurusan->jurusan}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-sm-3 pt-2">
+                <select class="form-control" id="search_kelas">
+                    <option selected value="">--- Pilih Kelas ---</option>
+                    <option value="Kelas X">Kelas X</option>
+                    <option value="Kelas XI">Kelas XI</option>
+                    <option value="Kelas XII">Kelas XII</option>
+                </select>
+            </div>
+            <div class="col-sm-3 pt-2">
+                <input type="text" id="search_siswa" placeholder="Masukkan Nama Siswa" class="form-control">
+            </div>
+            <div class="col-sm-3 pt-2">
+                <button type="button" class="btn btn-success" onclick="search()"><i class="mdi mdi-magnify mr-2"></i>Search</button>
+                <button type="button" class="btn btn-warning" onclick="resetDataTable()"><i class="mdi mdi-undo mr-2"></i>Reload</button>
+            </div>
+        </div>
         <div class="row p-0 m-0">
             <div class="col">
-                <div class="table-responsive">
-                    <button type="" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addData"><i class="mdi mdi-plus mr-2"></i> Tambah </button>
-                    <button type="" class="btn btn-success mt-2" data-toggle="modal" data-target="#importData"><i class="mdi mdi-file-excel mr-2"></i> Import </button>
-                    <table id="data_tables" class="table table-striped table-bordered no-wrap">
+                <div class="table-responsive"> <table id="data_tables" class="table table-striped table-bordered no-wrap">
                         <thead>
                             <tr>
                                 <th>Action</th>
@@ -34,6 +58,7 @@
                                 <th>Jenis Kelamin</th>
                                 <th>Alamat</th>
                                 <th>Ortu/Wali</th>
+                                <th>Jurusan</th>
                                 <th>Kelas</th>
                             </tr>
                         </thead>
@@ -323,19 +348,33 @@
 @push('scripts')
 <script>
     getDataTables()
+    function resetDataTable(){
+        $('#data_tables').DataTable().destroy();
+        $('#search_jurusan').prop('selectedIndex',0);
+        $('#search_kelas').prop('selectedIndex',0);
+        $('#search_siswa').val('');
+        getDataTables();
+    };
+    function search(){
+        $('#data_tables').DataTable().destroy();
+        getDataTables($('#search_jurusan').val(),$('#search_kelas').val(),$('#search_siswa').val());
+    }
     getJurusan()
-    function getDataTables(){
+    function getDataTables(search_jurusan,search_kelas,search_siswa){
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
             "serverSide": true,
-            // "searching": false,
+            "searching": false,
             "ajax": {
                 "url" : "/siswa/get_siswa_aktif",
                 "dataType": "json",
                 "type": "POST",
                 "data": {
-                    "_token": "<?= csrf_token()?>"
+                    "_token": "<?= csrf_token()?>", 
+                    search_jurusan : search_jurusan,
+                    search_kelas : search_kelas,
+                    search_siswa:search_siswa
                 }
             },
             "buttons": [
@@ -349,6 +388,7 @@
                 {"data": "jenis_kelamin"},
                 {"data": "alamat"},
                 {"data": "wali"},
+                {"data": "nama_jurusan"},
                 {"data": "kelas"},
             ]
         });

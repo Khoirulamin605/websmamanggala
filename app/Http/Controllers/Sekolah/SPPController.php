@@ -8,7 +8,11 @@ use DB;
 
 class SPPController{
     public function index(){
-        return view('page.sekolah.spp');
+        // generate tahun
+        $tahun = DB::table('spp')->select('periode')->groupBy('periode')->get();
+        // $tahun = array();
+        // dd(substr($tahun_from_db[0]->periode, -4));
+        return view('page.sekolah.spp',compact(['tahun']));
     }
     public function spp(Request $request){
         $columns = array(
@@ -24,9 +28,30 @@ class SPPController{
         $order = $columns[$request->input('order.0.column')];
         $dir   = $request->input('order.0.dir');
 
-        if(empty($request->input('search.value'))){
+        if(empty($request->search_tahun) && empty($request->search_bulan) && empty($request->search_status)){
             $data_search = DB::table('v_spp')->orderBy($order, $dir);
+        }elseif($request->search_tahun && $request->search_bulan && $request->search_status){
+            $periode = $request->search_bulan.'/'.$request->search_tahun;
+            $data_search = DB::table('v_spp')
+            ->where('periode', '=',$periode)
+            ->where('status', '=', $request->search_status)
+            ->orderBy($order, $dir);
+        }elseif($request->search_tahun && $request->search_bulan){
+            $periode = $request->search_bulan.'/'.$request->search_tahun;
+            $data_search = DB::table('v_spp')
+            ->where('periode', '=',$periode)
+            ->orderBy($order, $dir);
+        }elseif($request->search_tahun && $request->search_status){
+            $data_search = DB::table('v_spp')
+            ->where('periode', 'like',  "%{$request->search_tahun}%")
+            ->where('status', '=', $request->search_status)
+            ->orderBy($order, $dir);
+        }elseif($request->search_status){
+            $data_search = DB::table('v_spp')
+            ->where('status', '=', $request->search_status)
+            ->orderBy($order, $dir);
         }else{
+            dd('as');
             $search = $request->input('search.value');
             $data_search = DB::table('v_spp')
             ->where('nama_siswa', 'like', "%{$search}%")

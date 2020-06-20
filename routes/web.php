@@ -29,9 +29,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Data Siswa Aktif
-    Route::get('/siswa/siswa_aktif', function () {
-        return view('page.siswa.list_siswa');
-    });
+    Route::get('/siswa/siswa_aktif', 'Siswa\ListSiswaController@index');
     Route::post('/siswa/get_siswa_aktif', 'Siswa\ListSiswaController@getDataSiswaAktif');
     Route::post('/siswa/get_siswa_non_aktif', 'Siswa\ListSiswaController@getDataSiswaNonAktif');
     Route::post('/siswa/insert_siswa', 'Siswa\ListSiswaController@insertDataSiswa');

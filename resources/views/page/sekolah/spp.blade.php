@@ -19,11 +19,40 @@
     <!-- Content -->
     <!-- ============================================================== -->
     <div class="p-10" style="background-color:white;">
+        <button type="" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addData"><i class="mdi mdi-plus mr-2"></i> Generate Pembayaran </button>
+        <div class="row m-0">
+            <div class="col-sm-3 pt-2">
+                <select class="form-control" id="search_tahun">
+                    <option selected value="">--- Pilih Tahun ---</option>
+                    @foreach ($tahun as $tahun)
+                        <option value="{{substr($tahun->periode, -4)}}">{{substr($tahun->periode, -4)}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-sm-3 pt-2">
+                <select class="form-control" id="search_bulan">
+                    <option selected value="">--- Pilih Bulan ---</option>
+                    @for ($i = 1; $i < 13; $i++)
+                        <option value="{{$i}}">{{$i}}</option>
+                    @endfor
+                </select>
+            </div>
+            <div class="col-sm-3 pt-2">
+                <select class="form-control" id="search_status">
+                    <option selected value="">--- Pilih Status ---</option>
+                    <option value="Lunas">Lunas</option>
+                    <option value="Belum Dibayar">Belum Dibayar</option>
+                </select>
+            </div>
+            <div class="col-sm-3 pt-2">
+                <button type="button" class="btn btn-success" onclick="search()"><i class="mdi mdi-magnify mr-2"></i>Search</button>
+                <button type="button" class="btn btn-warning" onclick="resetDataTable()"><i class="mdi mdi-undo mr-2"></i>Reload</button>
+            </div>
+        </div>
+                    
         <div class="row p-0 m-0">
             <div class="col">
                 <div class="table-responsive">
-                    <button type="" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addData"><i class="mdi mdi-plus mr-2"></i> Generate Pembayaran </button>
-                    <!-- <button type="" class="btn btn-success mt-2" data-toggle="modal" data-target="#importData"><i class="mdi mdi-file-excel mr-2"></i> Import </button> -->
                     <table id="data_tables" class="table table-striped table-bordered no-wrap">
                         <thead>
                             <tr>
@@ -72,18 +101,33 @@
 @endsection
 @push('scripts')
 <script>
-    $(document).ready(function() {
+    getDataTables()
+    function resetDataTable(){
+        $('#data_tables').DataTable().destroy();
+        $('#search_tahun').prop('selectedIndex',0);
+        $('#search_bulan').prop('selectedIndex',0);
+        $('#search_status').prop('selectedIndex',0);
+        getDataTables();
+    };
+    function search(){
+        $('#data_tables').DataTable().destroy();
+        getDataTables($('#search_tahun').val(),$('#search_bulan').val(),$('#search_status').val());
+    }
+    function getDataTables(search_tahun,search_bulan,search_status) {
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
             "serverSide": true,
-            // "searching": false,
+            "searching": false,
             "ajax": {
                 "url" : "/sekolah/get_spp",
                 "dataType": "json",
                 "type": "POST",
                 "data": {
-                    "_token": "<?= csrf_token()?>"
+                    "_token": "<?= csrf_token()?>",
+                    search_tahun : search_tahun,
+                    search_bulan : search_bulan,
+                    search_status:search_status
                 }
             },
             "columns" : [
@@ -95,7 +139,7 @@
                 {"data": "status"},
             ]
         });
-    });
+    };
     $('#form-insert').on('submit',function(e){
         e.preventDefault()
         var form = $(this)

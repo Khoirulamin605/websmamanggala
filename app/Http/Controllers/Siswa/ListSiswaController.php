@@ -9,6 +9,10 @@ use File;
 use DB;
 
 class ListSiswaController{
+    public function index(){
+        $jurusan = DB::table('jurusan')->select('id','jurusan')->get();
+        return view('page.siswa.list_siswa', compact(['jurusan']));
+    }
 
     public function getDataSiswaAktif(Request $request){
         $columns = array(
@@ -19,26 +23,35 @@ class ListSiswaController{
             4 =>'jenis_kelamin',
             5 =>'alamat',
             6 =>'wali',
-            7 =>'kelas',
+            7 =>'nama_jurusan',
+            8 =>'kelas',
         );
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
         $dir   = $request->input('order.0.dir');
         
-        if(empty($request->input('search.value'))){
+
+        if(empty($request->search_siswa) && empty($request->search_jurusan) && empty($request->search_kelas)){
             $data_search = DB::table('v_siswa_aktif')->orderBy($order, $dir);
-        }else{
-            $search = $request->input('search.value');
+        }elseif($request->search_jurusan && $request->search_kelas && $request->search_siswa){
             $data_search = DB::table('v_siswa_aktif')
-            ->where('no_induk', 'like', "%{$search}%")
-            ->orWhere('nama_siswa', 'like', "%{$search}%")
-            ->orWhere('tempat_lahir', 'like', "%{$search}%")
-            ->orWhere('jenis_kelamin', 'like', "%{$search}%")
-            ->orWhere('alamat', 'like', "%{$search}%")
-            ->orWhere('wali', 'like', "%{$search}%")
-            ->orWhere('kelas', 'like', "%{$search}%")
+            ->where('jurusan', '=', $request->search_jurusan)
+            ->where('kelas', '=', $request->search_kelas)
+            ->where('nama_siswa', '=', $request->search_siswa)
             ->orderBy($order, $dir);
+        }elseif($request->search_jurusan && $request->search_kelas){
+            $data_search = DB::table('v_siswa_aktif')
+            ->where('jurusan', '=', $request->search_jurusan)
+            ->where('kelas', '=', $request->search_kelas)
+            ->orderBy($order, $dir);
+        }elseif($request->search_jurusan){
+            $data_search = DB::table('v_siswa_aktif')
+            ->where('jurusan', '=', $request->search_jurusan)
+            ->orderBy($order, $dir);
+        }else{
+            $data_search = DB::table('v_siswa_aktif')->orderBy($order, $dir);
+
         }
 
         $totaldata = count($data_search->get());
@@ -58,6 +71,7 @@ class ListSiswaController{
                 $nestedData['alamat'] =  $row->alamat;
                 $nestedData['jenis_kelamin'] =  $row->jenis_kelamin;
                 $nestedData['wali'] =  $row->wali;
+                $nestedData['nama_jurusan'] =  $row->nama_jurusan;
                 $nestedData['kelas'] =  $row->kelas;
                 $nestedData['action'] =  "<button class='btn btn-outline-warning btn-sm' 
                                             onClick=\"setData('$row->id','$row->no_induk','$row->nama_siswa','$row->tempat_lahir','$row->tanggal_lahir','$row->jenis_kelamin','$row->alamat','$row->kelas','$row->jurusan','$row->alasan_masuk','$row->wali')\"
