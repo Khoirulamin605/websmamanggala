@@ -44,6 +44,12 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Data Sekolah
+    Route::get('/sekolah', 'Sekolah\SekolahController@index');
+    Route::post('/sekolah/update_sekolah', 'Sekolah\SekolahController@updateData');
+    Route::get('sekolah/getById/{id}', 'Sekolah\SekolahController@getDataSekolah');
+
+
+    // Data Jurusan
     Route::get('/sekolah/jurusan', function () {
         return view('page.sekolah.jurusan');
     });

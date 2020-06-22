@@ -216,6 +216,9 @@
     }
     $('#form-update').on('submit',function(e){
         e.preventDefault()
+        // $.get(`/sekolah/update_status_pegawai/${$('#wali_kelas1').val()}`, function(data){
+        //     console.log(data)
+        // });
         var form = $(this)
         var url = form.attr('action')
         $.ajax({
@@ -320,9 +323,6 @@
         })
     }
     function setData(data1, data2, data3, data4, data5, data6, data7, data8){ 
-        $.get(`/sekolah/update_status_pegawai/${data5}`, function(data){
-            console.log(data)
-        });
         $("#id").val(data1);
         $("#nama_kelas").val(data2);
         $("#jurusan").val(data3);

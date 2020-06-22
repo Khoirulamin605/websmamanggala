@@ -20,13 +20,13 @@ class JurusanController{
         $dir   = $request->input('order.0.dir');
         
         if(empty($request->input('search.value'))){
-            $data_search = DB::table('jurusan')->orderBy($order, $dir);
+            $data_search = DB::table('v_jurusan')->orderBy($order, $dir);
         }else{
             $search = $request->input('search.value');
-            $data_search = DB::table('jurusan')
+            $data_search = DB::table('v_jurusan')
             ->where('id', 'like', "%{$search}%")
             ->orWhere('jurusan', 'like', "%{$search}%")
-            ->orWhere('kepala_jurusan', 'like', "%{$search}%")
+            ->orWhere('nama_pegawai', 'like', "%{$search}%")
             ->orWhere('status', 'like', "%{$search}%")
             ->orderBy($order, $dir);
         }
@@ -45,7 +45,7 @@ class JurusanController{
 
                 $nestedData['id'] =  $row->id;
                 $nestedData['jurusan'] =  $row->jurusan;
-                $nestedData['kepala_jurusan'] =  $row->kepala_jurusan;
+                $nestedData['kepala_jurusan'] =  $row->nama_pegawai;
                 $nestedData['status'] =  $row->status;
                 $nestedData['action'] =  "<button class='btn btn-outline-warning btn-sm' 
                                             onClick=\"setData('$row->id','$row->jurusan','$row->kepala_jurusan','$row->status')\"
@@ -72,6 +72,9 @@ class JurusanController{
         if($cek_data){
             $respMesssage = 'Data sudah terdaftar di database';
         }else{
+            DB::table('pegawai')->where('id', $request->kepala_jurusan)->update([
+                'tugas_tambahan' => 'Kepala Jurusan'
+            ]);
             $result = DB::table('jurusan')->insert([
                 'jurusan' => $request->jurusan,
                 'kepala_jurusan' => $request->kepala_jurusan,
@@ -93,8 +96,17 @@ class JurusanController{
         return response()->json($response);
 
     }
-
+    public function updatePegawaiTugas($id){
+        DB::table('pegawai')->where('id', $id)->update([
+            'tugas_tambahan' => ''
+        ]);
+    }
     public function updateJurusan(Request $request){
+        $kajur_lama = DB::table('jurusan')->select('kepala_jurusan')->where('id',$request->id)->first();
+        $this->updatePegawaiTugas($kajur_lama->kepala_jurusan);
+        DB::table('pegawai')->where('id', $request->kepala_jurusan)->update([
+            'tugas_tambahan' => 'Kepala Jurusan'
+        ]);
         $respError = FALSE;
         $respMesssage = '';
         $result = DB::table('jurusan')->where('id', $request->id)->update([

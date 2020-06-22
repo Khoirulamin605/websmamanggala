@@ -11,8 +11,8 @@ class KelasController{
     public function index(){
         $jurusan = DB::table('jurusan')->get();
         $jurusan1 = DB::table('jurusan')->get();
-        $wali_kelas = DB::table('pegawai')->get();
-        $wali_kelas1 = DB::table('pegawai')->get();
+        $wali_kelas = DB::table('pegawai')->where('tugas_tambahan', '!=', 'Waka Kesiswaan')->where('tugas_tambahan', '!=', 'Waka Kurikulum')->where('tugas_tambahan', '!=', 'Kepala Jurusan')->where('pegawai', '=', 1)->get();
+        $wali_kelas1 = DB::table('pegawai')->where('tugas_tambahan', '!=', 'Waka Kesiswaan')->where('tugas_tambahan', '!=', 'Waka Kurikulum')->where('tugas_tambahan', '!=', 'Kepala Jurusan')->where('pegawai', '=', 1)->get();
         return view('page.sekolah.rombel', compact(['jurusan','jurusan1','wali_kelas','wali_kelas1']));
     }
 
@@ -52,16 +52,18 @@ class KelasController{
         DB::table('pegawai')->where('nama_pegawai', $id)->update([
             'tugas_tambahan' => ''
         ]);
-        $respError = TRUE;
-        $respMesssage = 'Update data kelas berhasil';
-        $response = array(
-            'status' => $respError,
-            'message' => $respMesssage
-        );
+        // $respError = TRUE;
+        // $respMesssage = 'Update data kelas berhasil';
+        // $response = array(
+        //     'status' => $respError,
+        //     'message' => $respMesssage
+        // );
 
-        return response()->json($response);
+        // return response()->json($response);
     }
     public function update(Request $request){
+        $wali_kelas_lama = DB::table('kelas')->select('wali_kelas')->where('id',$request->id)->first();
+        $this->updatePegawaiTugas($wali_kelas_lama->wali_kelas);
         DB::table('pegawai')->where('nama_pegawai', $request->wali_kelas)->update([
             'tugas_tambahan' => 'Wali Kelas'
         ]);

@@ -13,7 +13,7 @@
                     <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bank"></i><span class="hide-menu">Sekolah</span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li>
-                                <a href="/sekolah/data_sekolah">Data Sekolah</a>
+                                <a href="/sekolah">Data Sekolah</a>
                             </li>
                             <li>
                                 <a href="/sekolah/jurusan">Jurusan</a>
@@ -51,23 +51,35 @@
                 </li>
                 <li>
                     <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-school"></i><span class="hide-menu">Data Siswa</span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li>
-                                <a href="/siswa/siswa_aktif">Siswa Aktif</a>
-                            </li>
-                            <li>
-                                <a href="/siswa/siswa_non_aktif">Siswa Non-Aktif</a>
-                            </li>
-                        </ul>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a href="/siswa/siswa_aktif">Siswa Aktif</a>
+                        </li>
+                        <li>
+                            <a href="/siswa/siswa_non_aktif">Siswa Non-Aktif</a>
+                        </li>
+                        <li>
+                            <a href="/siswa/alumni">Alumni</a>
+                        </li>
+                        <li>
+                            <a href="/siswa/nilai">Nilai Siswa</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Laporan</span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li>
-                                <a href="/laporan/keuangan">Laporan Keuangan</a>
+                                <a href="/laporan/keuangan_tahunan">Laporan Keuangan Tahunan</a>
                             </li>
                             <li>
-                                <a href="/laporan/nilai_siswa">Laporan Nilai Siswa</a>
+                                <a href="/laporan/keuangan_bulanan">Laporan Keuangan Bulanan</a>
+                            </li>
+                            {{-- <li>
+                                <a href="/laporan/lapora">Laporan Nilai Siswa</a>
+                            </li> --}}
+                            <li>
+                                <a href="/laporan/raport">Raport Siswa</a>
                             </li>
                         </ul>
                 </li>

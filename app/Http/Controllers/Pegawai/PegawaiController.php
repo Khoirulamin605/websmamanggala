@@ -127,14 +127,14 @@ class PegawaiController{
                 'tugas_tambahan' => $request->tugas_tambahan,
                 'status' => $request->status
             ]);
+            if($result){
+                $respError = TRUE;
+                $respMesssage = 'Input data pegawai berhasil';
+            }else{
+                $respMesssage = 'Terjadi kesalahan saat input data';
+            }
         }
 
-        if($result){
-            $respError = TRUE;
-            $respMesssage = 'Input data pegawai berhasil';
-        }else{
-            $respMesssage = 'Terjadi kesalahan saat input data';
-        }
         $response = array(
             'status' => $respError,
             'message' => $respMesssage
@@ -192,7 +192,7 @@ class PegawaiController{
         return response()->json($response);
     }
     public function getAllPegawai(){
-        $data_pegawai = DB::table('pegawai')->get();
+        $data_pegawai = DB::table('pegawai')->where('tugas_tambahan', '!=', 'Waka Kesiswaan')->where('tugas_tambahan', '!=', 'Waka Kurikulum')->where('tugas_tambahan', '!=', 'Wali Kelas')->where('pegawai', '=', 1)->get();
 
         return response()->json($data_pegawai);
     }
