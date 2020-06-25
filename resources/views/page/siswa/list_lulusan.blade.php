@@ -149,7 +149,7 @@
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
             "serverSide": true,
-            // "searching": false,
+            "searching": false,
             "ajax": {
                 "url" : "/siswa/get_alumni",
                 "dataType": "json",

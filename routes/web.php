@@ -104,4 +104,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/sekolah/get_spp', 'Sekolah\SPPController@spp');
     Route::post('/sekolah/generate_spp', 'Sekolah\SPPController@generate');
     Route::get('/sekolah/lunas_spp/{id}', 'Sekolah\SPPController@getLunas');
+
+
+    // Keuangan
+    Route::get('/sekolah/keuangan', 'Sekolah\KeuanganController@index');
+    Route::post('/sekolah/get_keuangan', 'Sekolah\KeuanganController@getKeuangan');
+    Route::post('/sekolah/insert_keuangan', 'Sekolah\KeuanganController@insert_keuangan');
+    Route::post('/sekolah/update_keuangan', 'Sekolah\KeuanganController@update_keuangan');
+    Route::get('/sekolah/delete_keuangan/{id}', 'Sekolah\KeuanganController@delete');
 });
