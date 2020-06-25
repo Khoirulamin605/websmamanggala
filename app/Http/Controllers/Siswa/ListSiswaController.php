@@ -11,7 +11,12 @@ use DB;
 class ListSiswaController{
     public function index(){
         $jurusan = DB::table('jurusan')->select('id','jurusan')->get();
-        return view('page.siswa.list_siswa', compact(['jurusan']));
+        $kelas = DB::table('siswa')->select('kelas')->where('status_aktif', 'Active')->groupBy('kelas')->get();
+        return view('page.siswa.list_siswa', compact(['jurusan', 'kelas']));
+    }
+    public function alumni(){
+        // $jurusan = DB::table('jurusan')->select('id','jurusan')->get();
+        return view('page.siswa.list_lulusan');
     }
 
     public function getDataSiswaAktif(Request $request){
@@ -142,6 +147,84 @@ class ListSiswaController{
                 $nestedData['jenis_kelamin'] =  $row->jenis_kelamin;
                 $nestedData['wali'] =  $row->wali;
                 $nestedData['kelas'] =  $row->kelas;
+                $nestedData['action'] =  "<button class='btn btn-outline-success btn-sm' data-toggle='modal'
+                                            onClick=\"setData('$row->no_induk','$row->nama_siswa','$row->tempat_lahir','$row->tanggal_lahir','$row->jenis_kelamin','$row->alamat','$row->kelas','$row->nama_jurusan','$row->status_aktif','$row->wali','$row->tanggal_keluar')\"
+                                            data-target='#viewSiswa'>Lihat Detail</button>";
+                $data[] = $nestedData;
+            }
+        }
+
+        echo json_encode(array(
+            "draw"              => intval($request->input('draw')),
+            "recordsTotal"      => intval($totaldata),
+            "recordsFiltered"   => intval($totalFiltered),
+            "data"              => $data
+        ));
+    }
+
+    public function getAlumni(Request $request){
+
+        $columns = array(
+            0 =>'no_induk',
+            1 =>'no_induk',
+            2 =>'nama_siswa',
+            3 =>'tempat_lahir',
+            4 =>'jenis_kelamin',
+            5 =>'alamat',
+            6 =>'wali',
+            7 =>'tanggal_keluar',
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir   = $request->input('order.0.dir');
+        
+        if(empty($request->search_siswa) && empty($request->search_tahun)){
+            $data_search = DB::table('v_siswa_lulus')->orderBy($order, $dir);
+        }elseif($request->search_tahun && $request->search_siswa){
+            $data_search = DB::table('v_siswa_lulus')
+            ->where('tanggal_keluar', '=', $request->search_tahun)
+            ->where('nama_siswa', '=', $request->search_siswa)
+            ->orderBy($order, $dir);
+        }elseif($request->search_tahun){
+            $data_search = DB::table('v_siswa_lulus')
+            ->where('tanggal_keluar', '=', $request->search_tahun)
+            ->orderBy($order, $dir);
+        }elseif($request->search_siswa){
+            $data_search = DB::table('v_siswa_lulus')
+            ->where('nama_siswa', '=', $request->search_siswa)
+            ->orderBy($order, $dir);
+        }else{
+            $search = $request->input('search.value');
+            $data_search = DB::table('v_siswa_lulus')
+            ->where('no_induk', 'like', "%{$search}%")
+            ->orWhere('nama_siswa', 'like', "%{$search}%")
+            ->orWhere('tempat_lahir', 'like', "%{$search}%")
+            ->orWhere('jenis_kelamin', 'like', "%{$search}%")
+            ->orWhere('alamat', 'like', "%{$search}%")
+            ->orWhere('wali', 'like', "%{$search}%")
+            ->orWhere('tanggal_keluar', 'like', "%{$search}%")
+            ->orderBy($order, $dir);
+        }
+
+        $totaldata = count($data_search->get());
+        $posts = $data_search
+                    ->offset($start)
+                    ->limit($limit)
+                    ->get();
+        $totalFiltered = $totaldata;
+
+        $data = array();
+        if($posts){
+            foreach($posts as $row){
+
+                $nestedData['no_induk'] =  $row->no_induk;
+                $nestedData['nama_siswa'] =  $row->nama_siswa;
+                $nestedData['lahir'] =  $row->tempat_lahir.', '.$row->tanggal_lahir;
+                $nestedData['alamat'] =  $row->alamat;
+                $nestedData['jenis_kelamin'] =  $row->jenis_kelamin;
+                $nestedData['wali'] =  $row->wali;
+                $nestedData['tanggal_keluar'] =  $row->tanggal_keluar;
                 $nestedData['action'] =  "<button class='btn btn-outline-success btn-sm' data-toggle='modal'
                                             onClick=\"setData('$row->no_induk','$row->nama_siswa','$row->tempat_lahir','$row->tanggal_lahir','$row->jenis_kelamin','$row->alamat','$row->kelas','$row->nama_jurusan','$row->status_aktif','$row->wali','$row->tanggal_keluar')\"
                                             data-target='#viewSiswa'>Lihat Detail</button>";
@@ -328,6 +411,44 @@ class ListSiswaController{
 
         return response()->json($response);
 
+    }
+    public function naikKelas(Request $request){
+        $respError = FALSE;
+        $respMesssage = '';
+
+        // Cek Kelas Lanjut If Exist
+        $cek_kelas_lanjut = DB::table('siswa')->where('kelas', $request->kelas_lanjut)->first();
+        // Cek Kelas Sebelumnya If Exist
+        $cek_kelas_sebelumnya = DB::table('siswa')->where('kelas', $request->kelas_asal)->first();
+
+        if(!$cek_kelas_sebelumnya){
+            $respMesssage = 'Kelas yang akan dinaikkan sudah kosong';
+        }elseif($cek_kelas_lanjut){
+            $respMesssage = 'Kelas yang akan dimasuki sudah ada';
+        }elseif($request->kelas_asal != "Kelas XII" && $request->kelas_lanjut == 'Lulus'){
+            $respMesssage = 'Anda Tidak bisa meluluskan yang bukan Kelas XII';
+        }else{
+            if($request->kelas_lanjut == "Lulus"){
+                $result = DB::table('siswa')->where('kelas', $request->kelas_asal)->update([
+                    'status_aktif' => $request->kelas_lanjut
+                ]);
+            }else{
+                $result = DB::table('siswa')->where('kelas', $request->kelas_asal)->update([
+                    'kelas' => $request->kelas_lanjut
+                ]);
+            }
+            if($result){
+                $respMesssage = 'Menaikan kelas berhasil';
+            }else{
+                $respMesssage = 'Menaikan kelas gagal';
+            }
+        }
+        $response = array(
+            'status' => $respError,
+            'message' => $respMesssage
+        );
+
+        return response()->json($response);
     }
 
 }

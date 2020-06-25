@@ -19,7 +19,7 @@
                                 <a href="/sekolah/jurusan">Jurusan</a>
                             </li>
                             <li>
-                                <a href="/sekolah/rombel">Rombongan Belajar</a>
+                                <a href="/sekolah/rombel">Kelas</a>
                             </li>
                             {{-- <li>
                                 <a href="/sekolah/anggota_rombel">Anggota Rombel</a>
@@ -29,6 +29,9 @@
                             </li>
                             <li>
                                 <a href="/sekolah/mapel">Mata Pelajaran</a>
+                            </li>
+                            <li>
+                                <a href="/sekolah/keuangan">Keuangan</a>
                             </li>
                         </ul>
                 </li>
@@ -78,9 +81,9 @@
                             {{-- <li>
                                 <a href="/laporan/lapora">Laporan Nilai Siswa</a>
                             </li> --}}
-                            <li>
+                            {{-- <li>
                                 <a href="/laporan/raport">Raport Siswa</a>
-                            </li>
+                            </li> --}}
                         </ul>
                 </li>
             </ul>

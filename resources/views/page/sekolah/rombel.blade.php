@@ -32,8 +32,8 @@
                                 <th>Rombongan Belajar</th>
                                 <th>Wali Kelas</th>
                                 <th>Status</th>
-                                <th>Tahun Ajaran</th>
-                                <th>Semester</th>
+                                {{-- <th>Tahun Ajaran</th>
+                                <th>Semester</th> --}}
                             </tr>
                         </thead>
                         <tbody class="small">
@@ -91,7 +91,7 @@
                             <label for="exampleInputEmail1">Nama Rombongan Belajar</label>
                             <input type="text" name="rombel" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="exampleInputEmail1">Tahun Ajaran</label>
                             <input type="text" name="tahun_ajar" class="form-control" required>
                         </div>
@@ -101,7 +101,7 @@
                                 <option value="I">Genap</option>
                                 <option value="II">Ganjil</option>
                             </select>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onclick="clearForm('form-insert')" data-dismiss="modal">Batal</button>
@@ -161,7 +161,7 @@
                             <label for="exampleInputEmail1">Nama Rombongan Belajar</label>
                             <input type="text" name="rombel" id="rombel" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="exampleInputEmail1">Tahun Ajaran</label>
                             <input type="text" name="tahun_ajar" id="tahun_ajar" class="form-control" required>
                         </div>
@@ -171,7 +171,7 @@
                                 <option value="I">Genap</option>
                                 <option value="II">Ganjil</option>
                             </select>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onclick="clearForm('form-update')" data-dismiss="modal">Batal</button>
@@ -204,8 +204,8 @@
                 {"data": "rombel"},
                 {"data": "wali_kelas"},
                 {"data": "status"},
-                {"data": "tahun_ajar"},
-                {"data": "semester"},
+                // {"data": "tahun_ajar"},
+                // {"data": "semester"},
             ]
         });
         $('#wali_kelas').select2();
@@ -329,8 +329,8 @@
         $("#wali_kelas1").val(data5);
         $("#status").val(data6);
         $("#rombel").val(data4);
-        $("#tahun_ajar").val(data7);
-        $("#semester").val(data8);
+        // $("#tahun_ajar").val(data7);
+        // $("#semester").val(data8);
     }
 </script>
 @endpush

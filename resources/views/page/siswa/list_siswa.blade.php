@@ -21,6 +21,7 @@
     <div class="p-10" style="background-color:white;">
         <button type="" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addData"><i class="mdi mdi-plus mr-2"></i> Tambah </button>
         <button type="" class="btn btn-success mt-2" data-toggle="modal" data-target="#importData"><i class="mdi mdi-file-excel mr-2"></i> Import </button>
+        <button type="" class="btn btn-info mt-2" data-toggle="modal" data-target="#setNaikKelas"><i class="mdi mdi-arrow-up mr-2"></i> Kenaikan Kelas </button>
         <div class="row m-0">
             <div class="col-sm-3 pt-2">
                 <select class="form-control" id="search_jurusan">
@@ -343,6 +344,48 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Naik Kelas -->
+    <div class="modal fade" id="setNaikKelas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="setNaikKelasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="form-naik" action="/siswa/naik_kelas" enctype="multipart/form-data">
+			        {{ csrf_field() }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setNaikKelasLabel">Naik Kelas</h5>
+                        <button type="button" class="close" data-dismiss="modal" onclick="clearForm('form-naik')" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kelas Asal</label>
+                            <select class="form-control" name="kelas_asal">
+                                <option selected value="">--- Pilih Kelas ---</option>
+                                @foreach ($kelas as $kelas)
+                                    <option value="{{$kelas->kelas}}">{{$kelas->kelas}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kelas Lanjut</label>
+                            <select class="form-control" name="kelas_lanjut">
+                                <option selected value="">--- Pilih Kelas ---</option>
+                                <option value="Kelas X">Kelas X</option>
+                                <option value="Kelas XI">Kelas XI</option>
+                                <option value="Kelas XII">Kelas XII</option>
+                                <option value="Lulus">Lulus</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearForm('form-naik')" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -496,6 +539,40 @@
         })
     });
 
+    $('#form-naik').on('submit',function(e){
+        e.preventDefault()
+        var form = $(this)
+        var url = form.attr('action')
+        $.ajax({
+            type : "POST",
+            url : url,
+            data: form.serialize(),
+            success: function(data){
+                if(data.status){
+                    Swal.fire({
+                        title: 'Sukses',
+                        text: data.message,
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick :false,
+                    }).then((result) => {
+                        if (result.value) {
+                            $('#data_tables').DataTable().ajax.reload();
+                            clearForm('form-naik');
+                            $('#setNaikKelas').modal('hide');
+                        }
+                    })
+                }else{
+                    Swal.fire(
+                        'Gagal',
+                        data.message,
+                        'error'
+                    )
+                }
+            }
+        })
+    });
     function hapusData(id){
         Swal.fire({
             title: 'Konfirmasi',

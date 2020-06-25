@@ -22,21 +22,21 @@ class KelasController{
         $data = array();
         if($posts){
             foreach($posts as $row){
-                if($row->semester == 'I'){
-                    $semester = 'Ganjil';
-                }else{
-                    $semester = 'Genap';
-                }
+                // if($row->semester == 'I'){
+                //     $semester = 'Ganjil';
+                // }else{
+                //     $semester = 'Genap';
+                // }
 
                 $nestedData['nama_kelas'] =  $row->nama_kelas;
                 $nestedData['jurusan'] =   $row->jurusan;
                 $nestedData['rombel'] =  $row->rombel;
                 $nestedData['wali_kelas'] =  $row->wali_kelas;
                 $nestedData['status'] =  $row->status;
-                $nestedData['tahun_ajar'] =  $row->tahun_ajar;
-                $nestedData['semester'] =  $semester;
+                // $nestedData['tahun_ajar'] =  $row->tahun_ajar;
+                // $nestedData['semester'] =  $semester;
                 $nestedData['action'] = "<button class='btn btn-outline-warning btn-sm' 
-                                        onClick=\"setData('$row->id','$row->nama_kelas','$row->jurusan','$row->rombel','$row->wali_kelas','$row->status','$row->tahun_ajar','$row->semester')\"
+                                        onClick=\"setData('$row->id','$row->nama_kelas','$row->jurusan','$row->rombel','$row->wali_kelas','$row->status')\"
                                         data-toggle='modal' data-target='#updateData'>Edit</button>
                                         <button class='btn btn-outline-danger btn-sm' onClick=\"hapusData('$row->id')\">Hapus</button>";
                 $data[] = $nestedData;

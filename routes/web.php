@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     // Data Siswa Aktif
     Route::get('/siswa/siswa_aktif', 'Siswa\ListSiswaController@index');
     Route::post('/siswa/get_siswa_aktif', 'Siswa\ListSiswaController@getDataSiswaAktif');
+    Route::post('/siswa/naik_kelas', 'Siswa\ListSiswaController@naikKelas');
     Route::post('/siswa/get_siswa_non_aktif', 'Siswa\ListSiswaController@getDataSiswaNonAktif');
     Route::post('/siswa/insert_siswa', 'Siswa\ListSiswaController@insertDataSiswa');
     Route::post('/siswa/update_siswa', 'Siswa\ListSiswaController@updateDataSiswa');
@@ -42,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/siswa/siswa_non_aktif', function () {
         return view('page.siswa.siswa_non_aktif');
     });
+    // Data Alumni
+    Route::get('/siswa/alumni', 'Siswa\ListSiswaController@alumni');
+    Route::post('siswa/get_alumni', 'Siswa\ListSiswaController@getAlumni');
 
     // Data Sekolah
     Route::get('/sekolah', 'Sekolah\SekolahController@index');
