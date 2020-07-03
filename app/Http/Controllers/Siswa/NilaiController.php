@@ -60,13 +60,15 @@ class NilaiController{
                 }else{
                     $nilai = $row->nilai;
                 }
+                $nama_siswa = $this->RemoveSpecialChapr($row->nama_siswa);
                 $nestedData['nama_siswa'] =  $row->nama_siswa;
                 $nestedData['jurusan'] =  $row->jurusan;
                 $nestedData['kelas'] =  $row->kelas;
                 $nestedData['tahun_ajaran'] =  $row->tahun_ajaran;
                 $nestedData['semester'] =  $row->semester;
                 $nestedData['nilai'] =  $nilai;
-                $nestedData['action'] = ''; 
+                $nestedData['action'] = "<button class='btn btn-outline-success btn-sm' data-toggle='modal' data-target='#updateData' 
+                onClick=\"setData('$row->id', '$nama_siswa', '$row->jurusan', '$row->kelas', '$row->kelas', '$row->tahun_ajaran', '$row->semester', '$row->nilai')\">Update</button>"; 
                 $data[] = $nestedData;
             }
         }
@@ -125,5 +127,33 @@ class NilaiController{
         );
 
         return response()->json($response);
+    }
+    public function update(Request $request){
+        $result = DB::table('nilai')->where('id', $request->id)->update([
+            'nilai' => $request->nilai
+        ]);
+
+
+        $respError = FALSE;
+        $respMesssage = '';
+
+
+        if($result){
+            $respError = TRUE;
+            $respMesssage = 'Update data nilai berhasil';
+        }else{
+            $respMesssage = 'Terjadi kesalahan saat Update data';
+        }
+
+        $response = array(
+            'status' => $respError,
+            'message' => $respMesssage
+        );
+
+        return response()->json($response);
+    }
+    function RemoveSpecialChapr($value){
+        $title = str_replace( array( '\'', '"', ',' , ';', '<', '>' ), ' ', $value);
+        return $title;
     }
 }

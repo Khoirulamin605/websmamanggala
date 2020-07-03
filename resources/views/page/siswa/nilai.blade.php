@@ -33,7 +33,7 @@
             </select>
         </div>
         <div class="col-sm-3 pt-2">
-            <select class="form-control" id="search_kelas">
+            <select class="form-control" onchange="getMapel()" id="search_kelas">
                 <option selected value="">--- Pilih Kelas ---</option>
                 <option value="Kelas X">Kelas X</option>
                 <option value="Kelas XI">Kelas XI</option>
@@ -43,9 +43,9 @@
         <div class="col-sm-3 pt-2">
             <select class="form-control" id="search_mapel">
                 <option selected value="">--- Pilih Mata Pelajaran ---</option>
-                @foreach ($mapel as $mapel)
+                {{-- @foreach ($mapel as $mapel)
                     <option value="{{$mapel->id}}">{{$mapel->nama_mapel}}</option>
-                @endforeach
+                @endforeach --}}
             </select>
         </div>
     </div>
@@ -95,7 +95,7 @@
     </div>
 </div>
 
-<!-- Modal Naik Kelas -->
+<!-- Modal Generate Nilai -->
 <div class="modal fade" id="bukaPenilaian" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="bukaPenilaianLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -149,6 +149,54 @@
         </div>
     </div>
 </div>
+        
+<!-- Modal Update -->
+<div class="modal fade" id="updateData" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="updateDataLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="form-update" action="/siswa/update_nilai">
+                {{ csrf_field() }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateDataLabel">Form Update Data Nilai</h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="clearForm('form-update')" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nama Siswa</label>
+                        <input type="text" name="nama_siswa" id="nama_siswa" class="form-control" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Jurusan</label>
+                        <input type="text" name="jurusan" id="jurusan" class="form-control" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kelas</label>
+                        <input type="text" name="kelas" id="kelas" class="form-control" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tahun Ajaran</label>
+                        <input type="text" name="tahun_ajaran" id="tahun_ajaran" class="form-control" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Semester</label>
+                        <input type="text" name="semester" id="semester" class="form-control" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nilai</label>
+                        <input type="number" name="nilai" id="nilai" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="clearForm('form-update')" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>   
 
 <!-- Modal Import -->
 <div class="modal fade" id="importData" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="importDataLabel" aria-hidden="true">
@@ -191,7 +239,7 @@
     function clearForm(data){
         document.getElementById(data).reset();
     } 
-    getDataTables()
+    search()
     function search(){
         $('#data_tables').DataTable().destroy();
         getDataTables($('#search_jurusan').val(),$('#search_kelas').val(),$('#search_mapel').val(),$('#search_tahun').val(),$('#search_semester').val());
@@ -229,20 +277,70 @@
             ]
         });
     }  
-    // function getMapel(){
-    //     var jurusanList = document.getElementById("getMapelByKelas");
-    //     $.post(`/siswa/get_nilai_by_kelas`,{
-    //         jurusan :$('#jurusan1').val(),
-    //         kelas : $('#kelas1').val()
-    //     }, function(data){
-    //         // console.log(data)
-    //         for(array_jurusan = 0; array_jurusan < data.length; array_jurusan++){
-    //             var jurusanOption = new Option(data[array_jurusan].nama_mapel, array_jurusan);
-    //             jurusanOption.value = data[array_jurusan].id;
-    //             jurusanList.options.add(jurusanOption);
-    //         }
-    //     }); 
-    // }
+    function getMapel(){
+        // console.log();
+        $('#search_mapel')
+            .empty()
+            .append('<option selected="selected" value="">--- Pilih Mata Pelajaran ---</option>')
+        ;
+        var jurusanList = document.getElementById("search_mapel");
+        $.post(`/siswa/get_nilai_by_kelas`,{
+            jurusan :$('#search_jurusan option:selected').text(),
+            kelas : $('#search_kelas').val()
+        }, function(data){
+            // console.log(data)
+            for(array_jurusan = 0; array_jurusan < data.length; array_jurusan++){
+                var jurusanOption = new Option(data[array_jurusan].nama_mapel, array_jurusan);
+                jurusanOption.value = data[array_jurusan].id;
+                jurusanList.options.add(jurusanOption);
+            }
+        }); 
+    } 
+    function setData(id, nama_siswa, jurusan, kelas, kelas, tahun_ajaran, semester, nilai){
+        $("#id").val(id);
+        $("#nama_siswa").val(nama_siswa);
+        $("#jurusan").val(jurusan);
+        $("#kelas").val(kelas);
+        $("#tahun_ajaran").val(tahun_ajaran);
+        $("#semester").val(semester);
+        $("#nilai").val(nilai);
+    }
+
+    $('#form-update').on('submit',function(e){
+        e.preventDefault()
+        var form = $(this)
+        var url = form.attr('action')
+        $.ajax({
+            type : "POST",
+            url : url,
+            data: form.serialize(),
+            success: function(data){
+                if(data.status){
+                    Swal.fire({
+                        title: 'Sukses',
+                        text: data.message,
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick :false,
+                    }).then((result) => {
+                        if (result.value) {
+                            $('#data_tables').DataTable().ajax.reload();
+                            clearForm('form-update');
+                            $('#updateData').modal('hide');
+                        }
+                    })
+                }else{
+                    Swal.fire(
+                        'Gagal',
+                        data.message,
+                        'error'
+                    )
+                }
+            }
+        })
+    })
+
     $('#form-buka-nilai').on('submit',function(e){
         e.preventDefault()
         var form = $(this)

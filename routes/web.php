@@ -119,4 +119,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/siswa/get_nilai_by_kelas', 'Siswa\NilaiController@getMapelByKelas');
     Route::post('/siswa/buka_penilaian',  'Siswa\NilaiController@bukaPenilaian');
     Route::post('/siswa/get_nilai_siswa', 'Siswa\NilaiController@dataNilai');
+    Route::post('/siswa/update_nilai', 'Siswa\NilaiController@update');
 });
