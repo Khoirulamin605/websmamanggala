@@ -69,7 +69,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Laporan</span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li>
@@ -78,14 +78,14 @@
                             <li>
                                 <a href="/laporan/keuangan_bulanan">Laporan Keuangan Bulanan</a>
                             </li>
-                            {{-- <li>
+                            <li>
                                 <a href="/laporan/lapora">Laporan Nilai Siswa</a>
-                            </li> --}}
-                            {{-- <li>
+                            </li>
+                            <li>
                                 <a href="/laporan/raport">Raport Siswa</a>
-                            </li> --}}
+                            </li>
                         </ul>
-                </li>
+                </li> --}}
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

@@ -112,4 +112,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/sekolah/insert_keuangan', 'Sekolah\KeuanganController@insert_keuangan');
     Route::post('/sekolah/update_keuangan', 'Sekolah\KeuanganController@update_keuangan');
     Route::get('/sekolah/delete_keuangan/{id}', 'Sekolah\KeuanganController@delete');
+
+    // Nilai Siswa
+    Route::get('/siswa/nilai', 'Siswa\NilaiController@index');
+    Route::get('/siswa/impoort_file', 'Siswa\NilaiController@getDataSiswa');
+    Route::post('/siswa/get_nilai_by_kelas', 'Siswa\NilaiController@getMapelByKelas');
+    Route::post('/siswa/buka_penilaian',  'Siswa\NilaiController@bukaPenilaian');
+    Route::post('/siswa/get_nilai_siswa', 'Siswa\NilaiController@dataNilai');
 });

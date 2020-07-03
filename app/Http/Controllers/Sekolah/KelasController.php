@@ -73,8 +73,8 @@ class KelasController{
             'rombel' => $request->rombel,
             'wali_kelas' => $request->wali_kelas,
             'status' => $request->status,
-            'tahun_ajar' => $request->tahun_ajar,
-            'semester' => $request->semester
+            // 'tahun_ajar' => $request->tahun_ajar,
+            // 'semester' => $request->semester
         ]);
 
 
@@ -106,8 +106,8 @@ class KelasController{
             'rombel' => $request->rombel,
             'wali_kelas' => $request->wali_kelas,
             'status' => $request->status,
-            'tahun_ajar' => $request->tahun_ajar,
-            'semester' => $request->semester
+            // 'tahun_ajar' => $request->tahun_ajar,
+            // 'semester' => $request->semester
         ]);
 
 
