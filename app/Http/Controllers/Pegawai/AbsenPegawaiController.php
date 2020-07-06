@@ -12,7 +12,15 @@ class AbsenPegawaiController{
         return view('page.pegawai.absen');
     }
 
+    public function detailAbsensi(){
+        $data_absen = DB::table('absen')->get();
+        dd($data_absen);
+
+        return view('page.pegawai.laporan_absen');
+    }
+
     public function getDataAbsen(Request $request){
+        $date_now = date('d-m-yy');
         $columns = array(
             0 =>'id',
             1 =>'nama_pegawai',
@@ -27,13 +35,12 @@ class AbsenPegawaiController{
         $dir   = $request->input('order.0.dir');
         
         if(empty($request->input('search.value'))){
-            $data_search = DB::table('v_absen')->orderBy($order, $dir);
+            $data_search = DB::table('v_absen')->where('tanggal', $date_now)->orderBy($order, $dir);
         }else{
             $search = $request->input('search.value');
             $data_search = DB::table('v_absen')
-            ->where('id', 'like', "%{$search}%")
-            ->orWhere('nama_pegawai', 'like', "%{$search}%")
-            // ->orWhere('keterangan', 'like', "%{$search}%")
+            ->where('tanggal', $date_now)
+            ->where('nama_pegawai', 'like', "%{$search}%")
             ->orderBy($order, $dir);
         }
 
@@ -99,7 +106,8 @@ class AbsenPegawaiController{
                     'masuk' => '-',
                     'pulang' => '-',
                     'jumlah_jam' => $data_pegawai[$data_awal]->jumlah_jam,
-                    'keterangan' => ''
+                    'keterangan' => '',
+                    'bulan_tahun' => date('m-yy')
                 ]; 
             }
             for($data_awal1 = 0; $data_awal1 <= count($data_pegawai_non_guru)-1; $data_awal1++){
@@ -109,7 +117,8 @@ class AbsenPegawaiController{
                     'masuk' => '-',
                     'pulang' => '-',
                     'jumlah_jam' => 0,
-                    'keterangan' => ''
+                    'keterangan' => '',
+                    'bulan_tahun' => date('m-yy')
                 ]; 
             }
             // dd($data_absen);

@@ -53,6 +53,9 @@
                             <li>
                                 <a href="/pegawai/absensi">Absen Pegawai</a>
                             </li>
+                            {{-- <li>
+                                <a href="/pegawai/absensi_detail">Data Absen Pegawai</a>
+                            </li> --}}
                         </ul>
                 </li>
                 <li>

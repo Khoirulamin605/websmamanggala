@@ -127,8 +127,14 @@ Route::middleware(['auth'])->group(function () {
 
     // Absen Pegawai
     Route::get('pegawai/absensi', 'Pegawai\AbsenPegawaiController@index');
+    Route::get('pegawai/absensi_detail', 'Pegawai\AbsenPegawaiController@detailAbsensi');
     Route::get('pegawai/hadir/{id}', 'Pegawai\AbsenPegawaiController@hadir');
     Route::get('pegawai/pulang/{id}', 'Pegawai\AbsenPegawaiController@pulang');
     Route::get('/pegawai/buka_absensi', 'Pegawai\AbsenPegawaiController@bukaAbsen');
     Route::post('/pegawai/get_absen_aktif', 'Pegawai\AbsenPegawaiController@getDataAbsen');
+
+    // Penggajian Pegawai
+    Route::get('/pegawai/penggajian', 'Pegawai\PenggajianController@index');
+    Route::post('/pegawai/get_data_gaji', 'Pegawai\PenggajianController@getDataPenggajian');
+    Route::get('/pegawai/buka_penggajian', 'Pegawai\PenggajianController@bukaPenggajian');
 });
