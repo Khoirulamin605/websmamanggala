@@ -199,7 +199,7 @@
     <script src="{{ asset('assets') }}/js/buttons.flash.min.js"></script>
     <script src="{{ asset('assets') }}/js/jszip.min.js"></script>
     <script src="{{ asset('assets') }}/js/pdfmake.min.js"></script>
-    <script src="{{ asset('assets') }}/js/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
     <script src="{{ asset('assets') }}/js/buttons.html5.min.js"></script>
     <script src="{{ asset('assets') }}/js/buttons.print.min.js"></script>
     <script src="{{ asset('assets') }}/js/select2.min.js"></script>

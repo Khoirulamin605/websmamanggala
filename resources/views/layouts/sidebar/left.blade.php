@@ -15,12 +15,6 @@
                             <li>
                                 <a href="/sekolah">Data Sekolah</a>
                             </li>
-                            <li>
-                                <a href="/sekolah/jurusan">Jurusan</a>
-                            </li>
-                            <li>
-                                <a href="/sekolah/rombel">Kelas</a>
-                            </li>
                             {{-- <li>
                                 <a href="/sekolah/anggota_rombel">Anggota Rombel</a>
                             </li> --}}
@@ -28,11 +22,20 @@
                                 <a href="/sekolah/spp">Pembayaran SPP</a>
                             </li>
                             <li>
-                                <a href="/sekolah/mapel">Mata Pelajaran</a>
-                            </li>
-                            <li>
                                 <a href="/sekolah/keuangan">Keuangan</a>
                             </li>
+                            <li>
+                                <a href="/sekolah/jurusan">Jurusan</a>
+                            </li>
+                            <li>
+                                <a href="/sekolah/rombel">Kelas</a>
+                            </li>
+                            <li>
+                                <a href="/sekolah/mapel">Mata Pelajaran</a>
+                            </li>
+                            {{-- <li>
+                                <a href="/sekolah/jadwal">Jadwal</a>
+                            </li> --}}
                         </ul>
                 </li>
                 <li>
@@ -48,7 +51,7 @@
                                 <a href="/pegawai/penggajian">Penggajian</a>
                             </li>
                             <li>
-                                <a href="/pegawai/absensi">Absensi</a>
+                                <a href="/pegawai/absensi">Absen Pegawai</a>
                             </li>
                         </ul>
                 </li>
@@ -66,6 +69,9 @@
                         </li>
                         <li>
                             <a href="/siswa/nilai">Nilai Siswa</a>
+                        </li>
+                        <li>
+                            <a href="/siswa/nilai_siswa">Nilai Per-Siswa</a>
                         </li>
                     </ul>
                 </li>

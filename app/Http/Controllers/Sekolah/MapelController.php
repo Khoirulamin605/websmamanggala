@@ -22,7 +22,9 @@ class MapelController{
             2 =>'jurusan',
             3 =>'kelas',
             4 =>'guru_pengajar',
-            5 =>'status'
+            5 =>'hari',
+            6 =>'jumlah_jam',
+            7 =>'status'
         );
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -35,7 +37,7 @@ class MapelController{
             $search = $request->input('search.value');
             $data_search = DB::table('mapel')
             ->where('nama_mapel', 'like', "%{$search}%")
-            ->orWhere('jrurusan', 'like', "%{$search}%")
+            ->orWhere('jurusan', 'like', "%{$search}%")
             ->orWhere('kelas', 'like', "%{$search}%")
             ->orWhere('guru_pengajar', 'like', "%{$search}%")
             ->orWhere('status', 'like', "%{$search}%")
@@ -52,15 +54,21 @@ class MapelController{
         $data = array();
         if($posts){
             foreach($posts as $row){
-
+                if($row->hari){
+                    $hari = $this->getHari($row->hari);
+                }else{
+                    $hari = '-';
+                }
                 // $nestedData['id'] =  $row->no_induk;
                 $nestedData['nama_mapel'] =  $row->nama_mapel;
                 $nestedData['jurusan'] =  $row->jurusan;
                 $nestedData['kelas'] =  $row->kelas;
                 $nestedData['guru_pengajar'] =  $row->guru_pengajar;
+                $nestedData['hari'] =  $hari;
+                $nestedData['jumlah_jam'] =  $row->jumlah_jam;
                 $nestedData['status'] =  $row->status;
                 $nestedData['action'] = "<button class='btn btn-outline-warning btn-sm' 
-                                        onClick=\"setData('$row->id','$row->nama_mapel','$row->jurusan','$row->kelas','$row->guru_pengajar','$row->status')\"
+                                        onClick=\"setData('$row->id','$row->nama_mapel','$row->jurusan','$row->kelas','$row->guru_pengajar','$row->hari','$row->jumlah_jam','$row->status')\"
                                         data-toggle='modal' data-target='#updateData'>Edit</button>
                                         <button class='btn btn-outline-danger btn-sm' onClick=\"hapusData('$row->id')\">Hapus</button>"; 
                 $data[] = $nestedData;
@@ -80,6 +88,8 @@ class MapelController{
             'jurusan' => $request->jurusan,
             'kelas' => $request->kelas,
             'guru_pengajar' => $request->pengajar,
+            'hari' => $request->hari,
+            'jumlah_jam' => $request->jumlah_jam,
             'status' => $request->status
         ]);
 
@@ -108,6 +118,8 @@ class MapelController{
             'jurusan' => $request->jurusan,
             'kelas' => $request->kelas,
             'guru_pengajar' => $request->pengajar,
+            'hari' => $request->hari,
+            'jumlah_jam' => $request->jumlah_jam,
             'status' => $request->status
         ]);
 
@@ -146,5 +158,20 @@ class MapelController{
         );
 
         return response()->json($response);
+    }
+    private function getHari($data){
+        if($data == 1){
+            return 'Senin';
+        }elseif($data == 2){
+            return 'Selasa';
+        }elseif($data == 3){
+            return 'Rabu';
+        }elseif($data == 4){
+            return 'Kamis';
+        }elseif($data == 6){
+            return 'Sabtu';
+        }elseif($data == 7){
+            return 'Ahad';
+        }
     }
 }

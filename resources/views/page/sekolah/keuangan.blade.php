@@ -200,8 +200,22 @@
                     search_bulan:search_bulan
                 }
             },
+            "dom": 'lBfrtip',
             "buttons": [
-                "csv","excel","pdf","print"
+                    {
+                        "extend": 'excel',
+                        className:'ml-3 btn-sm',
+                        "exportOptions": {
+                            "columns": ':not(.notexport)'
+                        }
+                    },
+                    {
+                        "extend": 'pdf',
+                        className:'ml-3 btn-sm',
+                        "exportOptions": {
+                            "columns": ':not(.notexport)'
+                        }
+                    }
             ],
             footerCallback: function (row, data, start, end, display) {
                 var api = this.api(), data;

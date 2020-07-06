@@ -32,6 +32,8 @@
                                 <th>Jurusan</th>
                                 <th>Kelas</th>
                                 <th>Pengajar</th>
+                                <th>Hari</th>
+                                <th>Jumlah Jam</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -71,8 +73,8 @@
                             <label for="exampleInputEmail1">Kelas</label>
                             <select class="form-control" name="kelas">
                                 <option value="Kelas X">Kelas X</option>
-                                <option value="Keals XI">Keals XI</option>
-                                <option value="Keals XII">Keals XII</option>
+                                <option value="Kelas XI">Kelas XI</option>
+                                <option value="Kelas XII">Kelas XII</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -82,6 +84,21 @@
                                     <option value="{{$wali_kelas->nama_pegawai}}">{{$wali_kelas->nama_pegawai}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Hari</label>
+                            <select class="form-control" name="hari">
+                                <option value="6">Sabtu</option>
+                                <option value="7">Ahad</option>
+                                <option value="1">Senin</option>
+                                <option value="2">Selasa</option>
+                                <option value="3">Rabu</option>
+                                <option value="4">Kamis</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Jumlah Jam</label>
+                            <input type="number" name="jumlah_jam" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Status</label>
@@ -129,8 +146,8 @@
                             <label for="exampleInputEmail1">Kelas</label>
                             <select class="form-control" name="kelas" id="kelas">
                                 <option value="Kelas X">Kelas X</option>
-                                <option value="Keals XI">Keals XI</option>
-                                <option value="Keals XII">Keals XII</option>
+                                <option value="Kelas XI">Kelas XI</option>
+                                <option value="Kelas XII">Kelas XII</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -140,6 +157,21 @@
                                     <option value="{{$wali_kelas1->nama_pegawai}}">{{$wali_kelas1->nama_pegawai}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Hari</label>
+                            <select class="form-control" id="hari" name="hari">
+                                <option value="6">Sabtu</option>
+                                <option value="7">Ahad</option>
+                                <option value="1">Senin</option>
+                                <option value="2">Selasa</option>
+                                <option value="3">Rabu</option>
+                                <option value="4">Kamis</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Jumlah Jam</label>
+                            <input type="number" id="jumlah_jam" name="jumlah_jam" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Status</label>
@@ -176,12 +208,31 @@
                     "_token": "<?= csrf_token()?>"
                 }
             },
+            "dom": 'lBfrtip',
+            "buttons": [
+                    {
+                        "extend": 'excel',
+                        className:'ml-3 btn-sm',
+                        "exportOptions": {
+                            "columns": ':not(.notexport)'
+                        }
+                    },
+                    {
+                        "extend": 'pdf',
+                        className:'ml-3 btn-sm',
+                        "exportOptions": {
+                            "columns": ':not(.notexport)'
+                        }
+                    }
+            ],
             "columns" : [
                 {"data": "action"},
                 {"data": "nama_mapel"},
                 {"data": "jurusan"},
                 {"data": "kelas"},
                 {"data": "guru_pengajar"},
+                {"data": "hari"},
+                {"data": "jumlah_jam"},
                 {"data": "status"},
             ]
         });
@@ -296,13 +347,15 @@
             }
         })
     }
-    function setData(data1, data2, data3, data4, data5, data6){ 
+    function setData(data1, data2, data3, data4, data5, data6, data7, data8){ 
         $("#id").val(data1);
         $("#nama_mapel").val(data2);
         $("#jurusan").val(data3);
         $("#kelas").val(data4);
         $("#pengajar1").val(data5);
-        $("#status").val(data6);
+        $("#hari").val(data6);
+        $("#jumlah_jam").val(data7);
+        $("#status").val(data8);
     }
 </script>
 @endpush

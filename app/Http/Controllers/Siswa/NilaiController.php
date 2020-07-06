@@ -20,6 +20,17 @@ class NilaiController{
         // dd($tahun);
         return view('page.siswa.nilai', compact(['jurusan', 'kelas', 'mapel', 'jurusan1', 'kelas1', 'mapel1', 'tahun']));
     }
+    public function indexSiswa(){
+        $jurusan = DB::table('jurusan')->select('id','jurusan')->get();
+        $jurusan1 = DB::table('jurusan')->select('id','jurusan')->get();
+        $mapel = DB::table('mapel')->select('id','nama_mapel')->get();
+        $mapel1 = DB::table('mapel')->select('id','nama_mapel')->get();
+        $kelas = DB::table('siswa')->select('kelas')->where('status_aktif', 'Active')->groupBy('kelas')->get();
+        $kelas1 = DB::table('siswa')->select('kelas')->where('status_aktif', 'Active')->groupBy('kelas')->get();
+        $tahun = DB::table('v_nilai')->select('tahun_ajaran')->groupBy('tahun_ajaran')->get();
+        // dd($tahun);
+        return view('page.siswa.nilai_siswa', compact(['jurusan', 'kelas', 'mapel', 'jurusan1', 'kelas1', 'mapel1', 'tahun']));
+    }
     public function dataNilai(Request $request){
         // dd($request->all());        
         $columns = array(
@@ -155,5 +166,70 @@ class NilaiController{
     function RemoveSpecialChapr($value){
         $title = str_replace( array( '\'', '"', ',' , ';', '<', '>' ), ' ', $value);
         return $title;
+    }
+    public function getSiswaByKelas(Request $request){
+        $result = DB::table('v_siswa_aktif')->where('nama_jurusan', $request->jurusan)->where('kelas', $request->kelas)->get();
+        return response()->json($result);
+    }
+
+
+    public function dataNilaiSiswa(Request $request){
+        // dd($request->all());        
+        $columns = array(
+            // 0 =>'nama_siswa',
+            0 =>'jurusan',
+            1 =>'kelas',
+            2 => 'nama_mapel',
+            3 =>'tahun_ajaran',
+            4 =>'semester',
+            5 =>'nilai',
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir   = $request->input('order.0.dir');
+
+        // $search = $request->input('search.value');
+        $data_search = DB::table('v_nilai')
+        ->where('id_jurusan', $request->search_jurusan)
+        ->where('kelas', $request->search_kelas)
+        ->where('id_siswa', $request->search_nama)
+        ->where('tahun_ajaran', $request->search_tahun)
+        ->where('semester', $request->search_semester)
+        ->orderBy($order, $dir);
+
+        $totaldata = count($data_search->get());
+        $posts = $data_search
+                    ->offset($start)
+                    ->limit($limit)
+                    ->get();
+        $totalFiltered = $totaldata;
+
+        $data = array();
+        if($posts){
+            foreach($posts as $row){
+                if($row->nilai == ''){
+                    $nilai = "-";
+                }else{
+                    $nilai = $row->nilai;
+                }
+                $nama_siswa = $this->RemoveSpecialChapr($row->nama_siswa);
+                // $nestedData['nama_siswa'] =  $row->nama_siswa;
+                $nestedData['jurusan'] =  $row->jurusan;
+                $nestedData['kelas'] =  $row->kelas;
+                $nestedData['nama_mapel'] =  $row->nama_mapel;
+                $nestedData['tahun_ajaran'] =  $row->tahun_ajaran;
+                $nestedData['semester'] =  $row->semester;
+                $nestedData['nilai'] =  $nilai;
+                $data[] = $nestedData;
+            }
+        }
+
+        echo json_encode(array(
+            "draw"              => intval($request->input('draw')),
+            "recordsTotal"      => intval($totaldata),
+            "recordsFiltered"   => intval($totalFiltered),
+            "data"              => $data
+        ));
     }
 }

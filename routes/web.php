@@ -115,9 +115,20 @@ Route::middleware(['auth'])->group(function () {
 
     // Nilai Siswa
     Route::get('/siswa/nilai', 'Siswa\NilaiController@index');
+    Route::get('/siswa/nilai_siswa', 'Siswa\NilaiController@indexSiswa');
     Route::get('/siswa/impoort_file', 'Siswa\NilaiController@getDataSiswa');
     Route::post('/siswa/get_nilai_by_kelas', 'Siswa\NilaiController@getMapelByKelas');
+    Route::post('/siswa/get_siswa_by_kelas', 'Siswa\NilaiController@getSiswaByKelas');
     Route::post('/siswa/buka_penilaian',  'Siswa\NilaiController@bukaPenilaian');
     Route::post('/siswa/get_nilai_siswa', 'Siswa\NilaiController@dataNilai');
+    Route::post('/siswa/get_nilai_persiswa', 'Siswa\NilaiController@dataNilaiSiswa');
     Route::post('/siswa/update_nilai', 'Siswa\NilaiController@update');
+
+
+    // Absen Pegawai
+    Route::get('pegawai/absensi', 'Pegawai\AbsenPegawaiController@index');
+    Route::get('pegawai/hadir/{id}', 'Pegawai\AbsenPegawaiController@hadir');
+    Route::get('pegawai/pulang/{id}', 'Pegawai\AbsenPegawaiController@pulang');
+    Route::get('/pegawai/buka_absensi', 'Pegawai\AbsenPegawaiController@bukaAbsen');
+    Route::post('/pegawai/get_absen_aktif', 'Pegawai\AbsenPegawaiController@getDataAbsen');
 });

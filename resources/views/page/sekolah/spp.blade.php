@@ -130,6 +130,23 @@
                     search_status:search_status
                 }
             },
+            "dom": 'lBfrtip',
+            "buttons": [
+                    {
+                        "extend": 'excel',
+                        className:'ml-3 btn-sm',
+                        "exportOptions": {
+                            "columns": ':not(.notexport)'
+                        }
+                    },
+                    {
+                        "extend": 'pdf',
+                        className:'ml-3 btn-sm',
+                        "exportOptions": {
+                            "columns": ':not(.notexport)'
+                        }
+                    }
+            ],
             "columns" : [
                 {"data": "action"},
                 {"data": "nama_siswa"},

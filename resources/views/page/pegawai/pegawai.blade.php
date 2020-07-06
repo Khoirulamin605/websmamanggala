@@ -258,8 +258,22 @@
                     "_token": "<?= csrf_token()?>"
                 }
             },
+            "dom": 'lBfrtip',
             "buttons": [
-                "csv","excel","pdf","print"
+                    {
+                        "extend": 'excel',
+                        className:'ml-3 btn-sm',
+                        "exportOptions": {
+                            "columns": ':not(.notexport)'
+                        }
+                    },
+                    {
+                        "extend": 'pdf',
+                        className:'ml-3 btn-sm',
+                        "exportOptions": {
+                            "columns": ':not(.notexport)'
+                        }
+                    }
             ],
             "columns" : [
                 {"data": "action"},
