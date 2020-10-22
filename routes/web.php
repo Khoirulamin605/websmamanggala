@@ -127,14 +127,25 @@ Route::middleware(['auth'])->group(function () {
 
     // Absen Pegawai
     Route::get('pegawai/absensi', 'Pegawai\AbsenPegawaiController@index');
-    Route::get('pegawai/absensi_detail', 'Pegawai\AbsenPegawaiController@detailAbsensi');
+    Route::get('pegawai/absensi_detail', 'Pegawai\AbsenPegawaiController@viewAbsensi');
+    Route::get('/pegawai/cek_absensi', 'Pegawai\AbsenPegawaiController@cekAbsensi');
     Route::get('pegawai/hadir/{id}', 'Pegawai\AbsenPegawaiController@hadir');
     Route::get('pegawai/pulang/{id}', 'Pegawai\AbsenPegawaiController@pulang');
     Route::get('/pegawai/buka_absensi', 'Pegawai\AbsenPegawaiController@bukaAbsen');
+    Route::post('pegawai/get_view_absen', 'Pegawai\AbsenPegawaiController@detailAbsensi');
     Route::post('/pegawai/get_absen_aktif', 'Pegawai\AbsenPegawaiController@getDataAbsen');
 
     // Penggajian Pegawai
     Route::get('/pegawai/penggajian', 'Pegawai\PenggajianController@index');
     Route::post('/pegawai/get_data_gaji', 'Pegawai\PenggajianController@getDataPenggajian');
     Route::get('/pegawai/buka_penggajian', 'Pegawai\PenggajianController@bukaPenggajian');
+
+
+
+
+    // QRCode
+    Route::get('/get_qr_absen/{id}', 'Pegawai\AbsenPegawaiController@cobaGenerate');
+    Route::get('/qrcode', function () {
+        return QrCode::size(300)->generate('A basic example of QR code! Nicesnippets.com');
+    });
 });

@@ -5,18 +5,70 @@ namespace App\Http\Controllers\Pegawai;
 
 use Illuminate\Http\Request;
 use DB;
+use QrCode;
+use Spipu\Html2Pdf\Html2Pdf;
+// use App\Http\Libraries\AuthLibrary;
 
 
 class AbsenPegawaiController{
     public function index(){
+        // $code = DB::table('absen')->where('tanggal',date('d-m-Y'))->first();
         return view('page.pegawai.absen');
     }
 
-    public function detailAbsensi(){
-        $data_absen = DB::table('absen')->get();
-        dd($data_absen);
-
+    public function viewAbsensi(){
         return view('page.pegawai.laporan_absen');
+    }
+    public function detailAbsensi(Request $request){
+        $bulan_ini = date("m-Y");
+        // Limit
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $data_search = DB::table('pegawai');
+        // $data_pegawai = DB::table('pegawai')->get();
+
+        $totaldata = count($data_search->get());
+        $posts = $data_search
+                    ->offset($start)
+                    ->limit($limit)
+                    ->get();
+        $totalFiltered = $totaldata;
+
+        $data = array();
+
+        foreach($posts as $pegawai){
+            $col = array();
+            $col[] = $pegawai->nama_pegawai;
+            for($tgl = 1; $tgl <= cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y')); $tgl++){
+                if($tgl <= date('d')){
+                    if(strlen($tgl) == 1){
+                        $tglnow = '0'.$tgl.'-'.$bulan_ini;
+                    }else{
+                        $tglnow = $tgl.'-'.$bulan_ini;
+                    }
+                    $data_absen = DB::table('absen')->where('tanggal',$tglnow)->where('id_pegawai',$pegawai->id)->first();
+                    if($data_absen){
+                        if($data_absen->masuk != '-' && $data_absen->pulang != '-'){
+                            $col[] = 'H';
+                        }else{
+                            $col[] = 'A';
+                        }
+                    }else{
+                        $col[] = '-';
+                    }
+                }else{
+                    $col[] = '';
+                }
+            }
+            $data[] = $col;
+        }
+
+        echo json_encode(array(
+            "draw"              => intval($request->input('draw')),
+            "recordsTotal"      => intval($totaldata),
+            "recordsFiltered"   => intval($totalFiltered),
+            "data"              => $data
+        ));
     }
 
     public function getDataAbsen(Request $request){
@@ -89,11 +141,12 @@ class AbsenPegawaiController{
 
         $respError = FALSE;
         $respMesssage = '';
+        $qr_id = uniqid();
 
         $cek_data = DB::table('absen')->where('tanggal', $thid_date)->first();
 
         if($cek_data){
-            $respMesssage = 'Absen Sudah digenerate';
+            $respMesssage = 'Absen Sudah dibuka';
         }else{
             $data_pegawai = DB::table('v_jam')->where('hari', '=', $this_day)->get();
             $data_pegawai_non_guru = DB::table('pegawai')->where('pegawai', '!=' , 1)->get();
@@ -107,7 +160,8 @@ class AbsenPegawaiController{
                     'pulang' => '-',
                     'jumlah_jam' => $data_pegawai[$data_awal]->jumlah_jam,
                     'keterangan' => '',
-                    'bulan_tahun' => date('m-yy')
+                    'bulan_tahun' => date('m-yy'),
+                    'id_qr' => $qr_id
                 ]; 
             }
             for($data_awal1 = 0; $data_awal1 <= count($data_pegawai_non_guru)-1; $data_awal1++){
@@ -118,12 +172,12 @@ class AbsenPegawaiController{
                     'pulang' => '-',
                     'jumlah_jam' => 0,
                     'keterangan' => '',
-                    'bulan_tahun' => date('m-yy')
+                    'bulan_tahun' => date('m-yy'),
+                    'id_qr' => $qr_id
                 ]; 
             }
-            // dd($data_absen);
-
             $result = DB::table('absen')->insert($data_absen);
+            $result = 'ok';
 
             if($result){
                 $respError = TRUE;
@@ -135,7 +189,8 @@ class AbsenPegawaiController{
         
         $response = array(
             'status' => $respError,
-            'message' => $respMesssage
+            'message' => $respMesssage,
+            'qr_id' => $qr_id
         );
 
         return response()->json($response);
@@ -202,5 +257,34 @@ class AbsenPegawaiController{
         );
 
         return response()->json($response);
+    }
+
+    public function cobaGenerate($qr){
+        $data_array = json_encode(array(
+            'tanggal' => date('d-m-yy'),
+            'qr_id' => $qr
+        ));
+        $nama_file = 'absen_pegawai-'.date('d-m-yy').'.pdf';
+        $data = QrCode::format('png')->size(250)->generate($data_array);
+        $qr_tag = "
+            <h2>Silahkan scan kode dibawah untuk melakukan absen</h2>
+            <img src=data:image/png;base64,".base64_encode($data)."/>
+        ";
+        $html2pdf = new Html2Pdf('P', 'A4', 'fr');
+        $html2pdf->pdf->SetDisplayMode('fullpage');
+        $html2pdf->writeHTML($qr_tag);
+        $html2pdf->output($nama_file);
+        // return response($data);
+        // return view('page.pegawai.qr_absen', compact('data'));
+    }
+
+    public function cekAbsensi(){
+        $data = DB::table('absen')->where('tanggal',date('d-m-Y'))->first();
+        if($data){
+            $result = $data;
+        }else{
+            $result = FALSE;
+        }
+        return response()->json($result);
     }
 }

@@ -70,7 +70,7 @@ class PenggajianController{
         $cek_data = DB::table('penggajian')->where('periode', $month_now)->first();
         if($cek_data){
             $jumlah_jam = DB::table('v_penghitung_gaji')->where('bulan_tahun',$month_now)->get();;
-            $data_gaji = array();
+            // $data_gaji = array();
             for($data_awal = 0; $data_awal <= count($jumlah_jam)-1; $data_awal++){
 
                 if($jumlah_jam[$data_awal]->total_jam == 0){

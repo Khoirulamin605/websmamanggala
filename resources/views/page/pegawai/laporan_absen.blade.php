@@ -16,6 +16,7 @@
 </div>
 @php
     $jumlah_tanggal =  cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y'));
+                                // dd($absen);
 @endphp
 <!-- ============================================================== -->
 <!-- Content -->
@@ -28,13 +29,11 @@
                 <!-- <button type="" class="btn btn-success mt-2" data-toggle="modal" data-target="#importData"><i class="mdi mdi-file-excel mr-2"></i> Import </button> -->
                 <table id="data_tables" class="table table-striped table-bordered no-wrap">
                     <thead>
-                        <tr align="center" >
-                            <th colspan="{{$jumlah_tanggal}}">@php
-                                echo date('F');
-                            @endphp</th>
+                        <tr>
+                            <td rowspan="2" align="center" style="vertical-align:middle">Nama</td>
+                            <td colspan="{{$jumlah_tanggal}}" align="center">Tanggal</td>
                         </tr>
                         <tr>
-                            <td>Nama</td>
                             @for ($i = 1; $i <= $jumlah_tanggal; $i++)
                                 <td>{{$i}}</td>
                             @endfor
@@ -49,5 +48,23 @@
 @endsection
 @push('scripts')
 <script>
+    getDataTables();
+    function getDataTables(){
+        $('#data_tables').DataTable({
+            lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
+            "processing": true,
+            "serverSide": true,
+            "searching": false,
+            "ordering": false,
+            "ajax": {
+                "url" : "/pegawai/get_view_absen",
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    "_token": "<?= csrf_token()?>"
+                }
+            }
+        });
+    } 
 </script>
 @endpush

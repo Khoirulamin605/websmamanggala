@@ -10,12 +10,15 @@
     "require": {
         "php": "^7.2.5",
         "fideloper/proxy": "^4.2",
+        "fpdf/fpdf": "^1.82",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "simplesoftwareio/simple-qrcode": "^4.1",
+        "spipu/html2pdf": "^5.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
