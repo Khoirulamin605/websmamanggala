@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2020 at 10:20 PM
--- Server version: 5.7.29-0ubuntu0.18.04.1
--- PHP Version: 7.2.24-0ubuntu0.18.04.6
+-- Waktu pembuatan: 01 Nov 2020 pada 18.09
+-- Versi server: 5.7.31-0ubuntu0.18.04.1
+-- Versi PHP: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 
 DELIMITER $$
 --
--- Functions
+-- Fungsi
 --
 CREATE DEFINER=`root`@`localhost` FUNCTION `hello` (`s` CHAR(20)) RETURNS CHAR(50) CHARSET latin1 RETURN CONCAT('Hello, ',s,'!')$$
 
@@ -32,7 +32,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `absen`
+-- Struktur dari tabel `absen`
 --
 
 CREATE TABLE `absen` (
@@ -43,34 +43,30 @@ CREATE TABLE `absen` (
   `pulang` varchar(20) NOT NULL,
   `jumlah_jam` int(20) NOT NULL,
   `keterangan` varchar(50) NOT NULL,
-  `bulan_tahun` varchar(20) DEFAULT NULL
+  `bulan_tahun` varchar(20) DEFAULT NULL,
+  `id_qr` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `absen`
+-- Dumping data untuk tabel `absen`
 --
 
-INSERT INTO `absen` (`id`, `id_pegawai`, `tanggal`, `masuk`, `pulang`, `jumlah_jam`, `keterangan`, `bulan_tahun`) VALUES
-(1, 3, '05-07-2020', '23:22:52', '23:26:06', 2, '', '07-2020'),
-(2, 17, '05-07-2020', '23:22:56', '23:26:11', 2, '', '07-2020'),
-(3, 8, '05-07-2020', '23:22:59', '23:26:13', 2, '', '07-2020'),
-(4, 4, '05-07-2020', '23:25:54', '23:26:16', 2, '', '07-2020'),
-(5, 7, '05-07-2020', '23:25:57', '23:26:18', 2, '', '07-2020'),
-(6, 1, '05-07-2020', '23:26:00', '23:26:21', 0, '', '07-2020'),
-(7, 22, '05-07-2020', '23:26:03', '23:26:23', 0, '', '07-2020'),
-(8, 6, '06-07-2020', '15:06:12', '15:07:08', 2, '', '07-2020'),
-(9, 9, '06-07-2020', '15:06:15', '15:07:11', 3, '', '07-2020'),
-(10, 12, '06-07-2020', '15:06:17', '15:07:14', 2, '', '07-2020'),
-(11, 3, '06-07-2020', '15:06:20', '15:07:15', 3, '', '07-2020'),
-(12, 7, '06-07-2020', '15:06:22', '15:07:17', 2, '', '07-2020'),
-(13, 11, '06-07-2020', '15:06:25', '15:07:18', 2, '', '07-2020'),
-(14, 1, '06-07-2020', '15:06:27', '15:07:20', 0, '', '07-2020'),
-(15, 22, '06-07-2020', '15:06:30', '15:07:22', 0, '', '07-2020');
+INSERT INTO `absen` (`id`, `id_pegawai`, `tanggal`, `masuk`, `pulang`, `jumlah_jam`, `keterangan`, `bulan_tahun`, `id_qr`) VALUES
+(1, 2, '22-10-2020', '-', '-', 2, '', '10-2020', '5f911cceb53d6'),
+(2, 14, '22-10-2020', '-', '-', 2, '', '10-2020', '5f911cceb53d6'),
+(3, 6, '22-10-2020', '-', '-', 3, '', '10-2020', '5f911cceb53d6'),
+(4, 2, '22-10-2020', '-', '-', 3, '', '10-2020', '5f911cceb53d6'),
+(5, 16, '22-10-2020', '-', '-', 3, '', '10-2020', '5f911cceb53d6'),
+(6, 3, '22-10-2020', '-', '-', 3, '', '10-2020', '5f911cceb53d6'),
+(7, 1, '22-10-2020', '-', '-', 0, '', '10-2020', '5f911cceb53d6'),
+(8, 22, '22-10-2020', '-', '-', 0, '', '10-2020', '5f911cceb53d6'),
+(9, 1, '23-10-2020', '-', '-', 0, '', '10-2020', '5f92c571bcaa6'),
+(10, 22, '23-10-2020', '-', '-', 0, '', '10-2020', '5f92c571bcaa6');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jabatan`
+-- Struktur dari tabel `jabatan`
 --
 
 CREATE TABLE `jabatan` (
@@ -81,7 +77,7 @@ CREATE TABLE `jabatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `jabatan`
+-- Dumping data untuk tabel `jabatan`
 --
 
 INSERT INTO `jabatan` (`id`, `jabatan`, `gaji`, `keterangan`) VALUES
@@ -97,7 +93,7 @@ INSERT INTO `jabatan` (`id`, `jabatan`, `gaji`, `keterangan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal`
+-- Struktur dari tabel `jadwal`
 --
 
 CREATE TABLE `jadwal` (
@@ -111,7 +107,7 @@ CREATE TABLE `jadwal` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jurusan`
+-- Struktur dari tabel `jurusan`
 --
 
 CREATE TABLE `jurusan` (
@@ -122,7 +118,7 @@ CREATE TABLE `jurusan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `jurusan`
+-- Dumping data untuk tabel `jurusan`
 --
 
 INSERT INTO `jurusan` (`id`, `jurusan`, `kepala_jurusan`, `status`) VALUES
@@ -132,7 +128,7 @@ INSERT INTO `jurusan` (`id`, `jurusan`, `kepala_jurusan`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kelas`
+-- Struktur dari tabel `kelas`
 --
 
 CREATE TABLE `kelas` (
@@ -145,7 +141,7 @@ CREATE TABLE `kelas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `kelas`
+-- Dumping data untuk tabel `kelas`
 --
 
 INSERT INTO `kelas` (`id`, `jurusan`, `nama_kelas`, `rombel`, `wali_kelas`, `status`) VALUES
@@ -156,7 +152,7 @@ INSERT INTO `kelas` (`id`, `jurusan`, `nama_kelas`, `rombel`, `wali_kelas`, `sta
 -- --------------------------------------------------------
 
 --
--- Table structure for table `keuangan`
+-- Struktur dari tabel `keuangan`
 --
 
 CREATE TABLE `keuangan` (
@@ -169,7 +165,7 @@ CREATE TABLE `keuangan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `keuangan`
+-- Dumping data untuk tabel `keuangan`
 --
 
 INSERT INTO `keuangan` (`id`, `uang_masuk`, `uang_keluar`, `saldo_akhir`, `keterangan`, `tanggal`) VALUES
@@ -180,7 +176,7 @@ INSERT INTO `keuangan` (`id`, `uang_masuk`, `uang_keluar`, `saldo_akhir`, `keter
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mapel`
+-- Struktur dari tabel `mapel`
 --
 
 CREATE TABLE `mapel` (
@@ -195,7 +191,7 @@ CREATE TABLE `mapel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `mapel`
+-- Dumping data untuk tabel `mapel`
 --
 
 INSERT INTO `mapel` (`id`, `nama_mapel`, `jurusan`, `kelas`, `guru_pengajar`, `hari`, `jumlah_jam`, `status`) VALUES
@@ -242,7 +238,7 @@ INSERT INTO `mapel` (`id`, `nama_mapel`, `jurusan`, `kelas`, `guru_pengajar`, `h
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nilai`
+-- Struktur dari tabel `nilai`
 --
 
 CREATE TABLE `nilai` (
@@ -257,7 +253,7 @@ CREATE TABLE `nilai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `nilai`
+-- Dumping data untuk tabel `nilai`
 --
 
 INSERT INTO `nilai` (`id`, `id_siswa`, `id_jurusan`, `tahun_ajaran`, `semester`, `id_mapel`, `kelas`, `nilai`) VALUES
@@ -745,7 +741,7 @@ INSERT INTO `nilai` (`id`, `id_siswa`, `id_jurusan`, `tahun_ajaran`, `semester`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pegawai`
+-- Struktur dari tabel `pegawai`
 --
 
 CREATE TABLE `pegawai` (
@@ -767,7 +763,7 @@ CREATE TABLE `pegawai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pegawai`
+-- Dumping data untuk tabel `pegawai`
 --
 
 INSERT INTO `pegawai` (`id`, `kode_pegawai`, `nama_pegawai`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `pendidikan_terahir`, `email`, `password`, `role`, `pegawai`, `tugas_tambahan`, `avatar`, `status`) VALUES
@@ -797,7 +793,7 @@ INSERT INTO `pegawai` (`id`, `kode_pegawai`, `nama_pegawai`, `tempat_lahir`, `ta
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penggajian`
+-- Struktur dari tabel `penggajian`
 --
 
 CREATE TABLE `penggajian` (
@@ -811,26 +807,22 @@ CREATE TABLE `penggajian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `penggajian`
+-- Dumping data untuk tabel `penggajian`
 --
 
 INSERT INTO `penggajian` (`id`, `id_pegawai`, `periode`, `total_jam`, `gaji`, `tambahan`, `total`) VALUES
-(1, 4, '07-2020', 2, 40000, 100000, 140000),
-(2, 8, '07-2020', 2, 40000, 0, 40000),
-(3, 12, '07-2020', 2, 40000, 0, 40000),
-(4, 3, '07-2020', 5, 100000, 150000, 250000),
-(5, 7, '07-2020', 4, 80000, 0, 80000),
-(6, 11, '07-2020', 2, 40000, 100000, 140000),
-(7, 22, '07-2020', 0, 500000, 0, 500000),
-(8, 1, '07-2020', 0, 500000, 0, 500000),
-(9, 6, '07-2020', 2, 40000, 0, 40000),
-(10, 9, '07-2020', 3, 60000, 100000, 160000),
-(11, 17, '07-2020', 2, 40000, 0, 40000);
+(1, 3, '10-2020', 3, 60000, 150000, 210000),
+(2, 16, '10-2020', 3, 60000, 300000, 360000),
+(3, 2, '10-2020', 5, 100000, 150000, 250000),
+(4, 14, '10-2020', 2, 40000, 0, 40000),
+(5, 1, '10-2020', 0, 500000, 0, 500000),
+(6, 6, '10-2020', 3, 60000, 0, 60000),
+(7, 22, '10-2020', 0, 500000, 0, 500000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sekolah`
+-- Struktur dari tabel `sekolah`
 --
 
 CREATE TABLE `sekolah` (
@@ -850,7 +842,7 @@ CREATE TABLE `sekolah` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `sekolah`
+-- Dumping data untuk tabel `sekolah`
 --
 
 INSERT INTO `sekolah` (`id`, `npsn`, `nama`, `alamat`, `tahun_berdiri`, `kepala`, `wakakur`, `wakasis`, `akreditasi`, `email`, `telpon`, `kurikulum`, `status`) VALUES
@@ -859,7 +851,7 @@ INSERT INTO `sekolah` (`id`, `npsn`, `nama`, `alamat`, `tahun_berdiri`, `kepala`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `siswa`
+-- Struktur dari tabel `siswa`
 --
 
 CREATE TABLE `siswa` (
@@ -882,7 +874,7 @@ CREATE TABLE `siswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `siswa`
+-- Dumping data untuk tabel `siswa`
 --
 
 INSERT INTO `siswa` (`id`, `no_induk`, `nama_siswa`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `wali`, `avatar`, `kelas`, `jurusan`, `tanggal_masuk`, `alasan_masuk`, `tanggal_keluar`, `status_lulus`, `status_aktif`) VALUES
@@ -903,7 +895,7 @@ INSERT INTO `siswa` (`id`, `no_induk`, `nama_siswa`, `tempat_lahir`, `tanggal_la
 (15, '0033000632', 'Kis\'atin Nuroh', 'Lamongan', '2003-09-06', 'Perempuan', 'Dadapan-Solokuro-Lamongan', 'Sukaini', NULL, 'Kelas X', 2, '2020-06-22', 'Baru', NULL, NULL, 'Active'),
 (16, '0022472754', 'LAILATUL EKA NURMALA ALAFIA', 'Lamongan', '2002-10-03', 'Perempuan', 'Dadapan-Solokuro-Lamongan', 'MUNAFIAH', NULL, 'Kelas XI', 2, '2020-06-22', 'Baru', NULL, NULL, 'Active'),
 (17, '0032771910', 'Leo Diva Arianto', 'Lamongan', '2003-03-29', 'Laki-Laki', 'Dadapan-Solokuro-Lamongan', 'Maratus Sholihah', NULL, 'Kelas XI', 2, '2020-06-22', 'Baru', NULL, NULL, 'Active'),
-(18, '0015891943', 'M. ARIF FURQON', 'Lamongan', '2002-10-16', 'Laki-Laki', 'Dadapan-Solokuro-Lamongan', 'CHOLIFAH', NULL, 'Kelas XII', 2, '2020-06-22', 'Baru', NULL, NULL, 'Active'),
+(18, '0015891943', 'M. ARIF FURQON', 'Lamongan', '2002-10-16', 'Laki-Laki', 'Dadapan-Solokuro-Lamongan', 'CHOLIFAH', NULL, 'Kelas XII', 2, '2020-06-22', 'Baru', '2020-07-07', NULL, 'Keluar'),
 (19, '0022072393', 'M. Azmi Naufal', 'Lamongan', '2002-10-12', 'Laki-Laki', 'Dadapan-Solokuro-Lamongan', 'Titim Muhimmah', NULL, 'Kelas XII', 2, '2020-06-22', 'Baru', NULL, NULL, 'Active'),
 (20, '0000608735', 'M. Hasbullah', 'Lamongan', '2000-08-15', 'Laki-Laki', 'Dadapan-Solokuro-Lamongan', 'Qibtiatun', NULL, 'Kelas XI', 2, '2020-06-22', 'Baru', NULL, NULL, 'Active'),
 (21, '0025160358', 'M. Kamaluddin', 'Lamongan', '2002-06-05', 'Laki-Laki', 'Tebluru-Solokuro-Lamongan', 'Shofiatul Ummah', NULL, 'Kelas XII', 2, '2020-06-22', 'Baru', NULL, NULL, 'Active'),
@@ -961,7 +953,7 @@ INSERT INTO `siswa` (`id`, `no_induk`, `nama_siswa`, `tempat_lahir`, `tanggal_la
 -- --------------------------------------------------------
 
 --
--- Table structure for table `spp`
+-- Struktur dari tabel `spp`
 --
 
 CREATE TABLE `spp` (
@@ -974,14 +966,14 @@ CREATE TABLE `spp` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `spp`
+-- Dumping data untuk tabel `spp`
 --
 
 INSERT INTO `spp` (`id`, `id_siswa`, `periode`, `tgl_bayar`, `nominal`, `status`) VALUES
 (1, 1, '6/2020', '2020-07-05', 100000, 'Lunas'),
 (2, 2, '6/2020', '2020-07-05', 100000, 'Lunas'),
 (3, 3, '6/2020', '2020-07-05', 100000, 'Lunas'),
-(4, 4, '6/2020', NULL, 100000, 'Belum Dibayar'),
+(4, 4, '6/2020', '2020-10-17', 100000, 'Lunas'),
 (5, 5, '6/2020', NULL, 100000, 'Belum Dibayar'),
 (6, 6, '6/2020', NULL, 100000, 'Belum Dibayar'),
 (7, 7, '6/2020', NULL, 100000, 'Belum Dibayar'),
@@ -1004,7 +996,7 @@ INSERT INTO `spp` (`id`, `id_siswa`, `periode`, `tgl_bayar`, `nominal`, `status`
 (24, 24, '6/2020', NULL, 100000, 'Belum Dibayar'),
 (25, 25, '6/2020', NULL, 100000, 'Belum Dibayar'),
 (26, 26, '6/2020', NULL, 100000, 'Belum Dibayar'),
-(27, 27, '6/2020', NULL, 100000, 'Belum Dibayar'),
+(27, 27, '6/2020', '2020-10-17', 100000, 'Lunas'),
 (28, 28, '6/2020', NULL, 100000, 'Belum Dibayar'),
 (29, 29, '6/2020', NULL, 100000, 'Belum Dibayar'),
 (30, 30, '6/2020', NULL, 100000, 'Belum Dibayar'),
@@ -1048,13 +1040,83 @@ INSERT INTO `spp` (`id`, `id_siswa`, `periode`, `tgl_bayar`, `nominal`, `status`
 (68, 68, '6/2020', NULL, 100000, 'Belum Dibayar'),
 (69, 69, '6/2020', NULL, 100000, 'Belum Dibayar'),
 (70, 70, '6/2020', NULL, 100000, 'Belum Dibayar'),
-(71, 71, '6/2020', NULL, 100000, 'Belum Dibayar');
+(71, 71, '6/2020', NULL, 100000, 'Belum Dibayar'),
+(72, 1, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(73, 2, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(74, 3, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(75, 4, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(76, 5, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(77, 6, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(78, 7, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(79, 8, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(80, 9, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(81, 10, '10/2020', '2020-10-21', 1000000, 'Lunas'),
+(82, 11, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(83, 12, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(84, 13, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(85, 14, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(86, 15, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(87, 16, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(88, 17, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(89, 19, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(90, 20, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(91, 21, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(92, 22, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(93, 23, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(94, 24, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(95, 25, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(96, 26, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(97, 27, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(98, 28, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(99, 29, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(100, 30, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(101, 31, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(102, 32, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(103, 33, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(104, 34, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(105, 35, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(106, 36, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(107, 37, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(108, 38, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(109, 39, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(110, 40, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(111, 41, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(112, 42, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(113, 43, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(114, 44, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(115, 45, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(116, 46, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(117, 47, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(118, 48, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(119, 49, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(120, 50, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(121, 51, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(122, 52, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(123, 53, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(124, 54, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(125, 55, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(126, 56, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(127, 57, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(128, 58, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(129, 59, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(130, 60, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(131, 61, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(132, 62, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(133, 63, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(134, 64, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(135, 65, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(136, 66, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(137, 67, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(138, 68, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(139, 69, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(140, 70, '10/2020', NULL, 1000000, 'Belum Dibayar'),
+(141, 71, '10/2020', NULL, 1000000, 'Belum Dibayar');
 
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_absen`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_absen`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_absen` (
 `id` int(11)
@@ -1070,8 +1132,8 @@ CREATE TABLE `v_absen` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_custom_mapel`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_custom_mapel`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_custom_mapel` (
 `id` int(11)
@@ -1085,8 +1147,8 @@ CREATE TABLE `v_custom_mapel` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_jam`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_jam`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_jam` (
 `guru_pengajar` varchar(100)
@@ -1098,8 +1160,8 @@ CREATE TABLE `v_jam` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_jumlah_jam`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_jumlah_jam`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_jumlah_jam` (
 `id_pegawai` int(11)
@@ -1109,8 +1171,8 @@ CREATE TABLE `v_jumlah_jam` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_jurusan`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_jurusan`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_jurusan` (
 `id` int(11)
@@ -1123,8 +1185,8 @@ CREATE TABLE `v_jurusan` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_nilai`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_nilai`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_nilai` (
 `id` int(11)
@@ -1143,8 +1205,8 @@ CREATE TABLE `v_nilai` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_pegawai`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_pegawai`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_pegawai` (
 `id` int(11)
@@ -1168,8 +1230,8 @@ CREATE TABLE `v_pegawai` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_penggajian`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_penggajian`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_penggajian` (
 `id` int(11)
@@ -1185,8 +1247,8 @@ CREATE TABLE `v_penggajian` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_penghitung_gaji`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_penghitung_gaji`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_penghitung_gaji` (
 `id_pegawai` int(11)
@@ -1201,8 +1263,8 @@ CREATE TABLE `v_penghitung_gaji` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_sekolah`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_sekolah`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_sekolah` (
 `id` int(11)
@@ -1226,8 +1288,8 @@ CREATE TABLE `v_sekolah` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_siswa_aktif`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_siswa_aktif`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_siswa_aktif` (
 `id` int(11)
@@ -1252,8 +1314,8 @@ CREATE TABLE `v_siswa_aktif` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_siswa_inactive`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_siswa_inactive`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_siswa_inactive` (
 `id` int(11)
@@ -1278,8 +1340,8 @@ CREATE TABLE `v_siswa_inactive` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_siswa_lulus`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_siswa_lulus`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_siswa_lulus` (
 `id` int(11)
@@ -1303,8 +1365,8 @@ CREATE TABLE `v_siswa_lulus` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_spp`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_spp`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_spp` (
 `id` int(11)
@@ -1320,7 +1382,7 @@ CREATE TABLE `v_spp` (
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_absen`
+-- Struktur untuk view `v_absen`
 --
 DROP TABLE IF EXISTS `v_absen`;
 
@@ -1329,7 +1391,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_custom_mapel`
+-- Struktur untuk view `v_custom_mapel`
 --
 DROP TABLE IF EXISTS `v_custom_mapel`;
 
@@ -1338,7 +1400,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_jam`
+-- Struktur untuk view `v_jam`
 --
 DROP TABLE IF EXISTS `v_jam`;
 
@@ -1347,7 +1409,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_jumlah_jam`
+-- Struktur untuk view `v_jumlah_jam`
 --
 DROP TABLE IF EXISTS `v_jumlah_jam`;
 
@@ -1356,7 +1418,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_jurusan`
+-- Struktur untuk view `v_jurusan`
 --
 DROP TABLE IF EXISTS `v_jurusan`;
 
@@ -1365,7 +1427,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_nilai`
+-- Struktur untuk view `v_nilai`
 --
 DROP TABLE IF EXISTS `v_nilai`;
 
@@ -1374,7 +1436,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_pegawai`
+-- Struktur untuk view `v_pegawai`
 --
 DROP TABLE IF EXISTS `v_pegawai`;
 
@@ -1383,7 +1445,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_penggajian`
+-- Struktur untuk view `v_penggajian`
 --
 DROP TABLE IF EXISTS `v_penggajian`;
 
@@ -1392,7 +1454,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_penghitung_gaji`
+-- Struktur untuk view `v_penghitung_gaji`
 --
 DROP TABLE IF EXISTS `v_penghitung_gaji`;
 
@@ -1401,7 +1463,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_sekolah`
+-- Struktur untuk view `v_sekolah`
 --
 DROP TABLE IF EXISTS `v_sekolah`;
 
@@ -1410,7 +1472,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_siswa_aktif`
+-- Struktur untuk view `v_siswa_aktif`
 --
 DROP TABLE IF EXISTS `v_siswa_aktif`;
 
@@ -1419,7 +1481,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_siswa_inactive`
+-- Struktur untuk view `v_siswa_inactive`
 --
 DROP TABLE IF EXISTS `v_siswa_inactive`;
 
@@ -1428,7 +1490,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_siswa_lulus`
+-- Struktur untuk view `v_siswa_lulus`
 --
 DROP TABLE IF EXISTS `v_siswa_lulus`;
 
@@ -1437,7 +1499,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_spp`
+-- Struktur untuk view `v_spp`
 --
 DROP TABLE IF EXISTS `v_spp`;
 
@@ -1448,164 +1510,164 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indexes for table `absen`
+-- Indeks untuk tabel `absen`
 --
 ALTER TABLE `absen`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jabatan`
+-- Indeks untuk tabel `jabatan`
 --
 ALTER TABLE `jabatan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jadwal`
+-- Indeks untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jurusan`
+-- Indeks untuk tabel `jurusan`
 --
 ALTER TABLE `jurusan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `kelas`
+-- Indeks untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `keuangan`
+-- Indeks untuk tabel `keuangan`
 --
 ALTER TABLE `keuangan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `mapel`
+-- Indeks untuk tabel `mapel`
 --
 ALTER TABLE `mapel`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `nilai`
+-- Indeks untuk tabel `nilai`
 --
 ALTER TABLE `nilai`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pegawai`
+-- Indeks untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `penggajian`
+-- Indeks untuk tabel `penggajian`
 --
 ALTER TABLE `penggajian`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sekolah`
+-- Indeks untuk tabel `sekolah`
 --
 ALTER TABLE `sekolah`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `siswa`
+-- Indeks untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `spp`
+-- Indeks untuk tabel `spp`
 --
 ALTER TABLE `spp`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `absen`
+-- AUTO_INCREMENT untuk tabel `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `jabatan`
+-- AUTO_INCREMENT untuk tabel `jabatan`
 --
 ALTER TABLE `jabatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `jadwal`
+-- AUTO_INCREMENT untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `jurusan`
+-- AUTO_INCREMENT untuk tabel `jurusan`
 --
 ALTER TABLE `jurusan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `kelas`
+-- AUTO_INCREMENT untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `keuangan`
+-- AUTO_INCREMENT untuk tabel `keuangan`
 --
 ALTER TABLE `keuangan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `mapel`
+-- AUTO_INCREMENT untuk tabel `mapel`
 --
 ALTER TABLE `mapel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `nilai`
+-- AUTO_INCREMENT untuk tabel `nilai`
 --
 ALTER TABLE `nilai`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=481;
 
 --
--- AUTO_INCREMENT for table `pegawai`
+-- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `penggajian`
+-- AUTO_INCREMENT untuk tabel `penggajian`
 --
 ALTER TABLE `penggajian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `sekolah`
+-- AUTO_INCREMENT untuk tabel `sekolah`
 --
 ALTER TABLE `sekolah`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `siswa`
+-- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
--- AUTO_INCREMENT for table `spp`
+-- AUTO_INCREMENT untuk tabel `spp`
 --
 ALTER TABLE `spp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
