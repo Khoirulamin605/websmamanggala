@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/login', 'Api\LoginController@loginApi');
+Route::middleware('LoginApi')->group(function () {
+    Route::get('/cek_session', 'Api\LoginController@cekSession');
+    Route::get('/logout', 'Api\LoginController@logoutApi');
+    Route::get('/cek_absen/{id}', 'Api\AbsenController@cekAbsen');
+});
