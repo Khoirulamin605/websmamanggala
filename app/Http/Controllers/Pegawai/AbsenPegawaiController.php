@@ -20,7 +20,13 @@ class AbsenPegawaiController{
         return view('page.pegawai.laporan_absen');
     }
     public function detailAbsensi(Request $request){
-        $bulan_ini = date("m-Y");
+        if(empty($request->bulan) && empty($request->tahun)){
+            $bulan_ini = date("m-Y");
+            $hari = cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y'));
+        }else{
+            $bulan_ini = $request->bulan.'-'.$request->tahun;
+            $hari = cal_days_in_month(CAL_GREGORIAN,$request->bulan,$request->tahun);
+        }
         // Limit
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -39,7 +45,7 @@ class AbsenPegawaiController{
         foreach($posts as $pegawai){
             $col = array();
             $col[] = $pegawai->nama_pegawai;
-            for($tgl = 1; $tgl <= cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y')); $tgl++){
+            for($tgl = 1; $tgl <= $hari; $tgl++){
                 if($tgl <= date('d')){
                     if(strlen($tgl) == 1){
                         $tglnow = '0'.$tgl.'-'.$bulan_ini;
@@ -49,7 +55,7 @@ class AbsenPegawaiController{
                     $data_absen = DB::table('absen')->where('tanggal',$tglnow)->where('id_pegawai',$pegawai->id)->first();
                     if($data_absen){
                         if($data_absen->masuk != '-'){
-                            $col[] = 'HH';
+                            $col[] = 'H';
                         }
                         // if($data_absen->masuk != '-' && $data_absen->pulang != '-'){
                         //     $col[] = 'HH';
@@ -61,7 +67,7 @@ class AbsenPegawaiController{
                             $col[] = 'A';
                         }
                     }else{
-                        $col[] = '';
+                        $col[] = '-';
                     }
                 }else{
                     $col[] = '';

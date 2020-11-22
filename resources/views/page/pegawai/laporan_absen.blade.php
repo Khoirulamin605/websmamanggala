@@ -16,12 +16,76 @@
 </div>
 @php
     $jumlah_tanggal =  cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y'));
-                                // dd($absen);
 @endphp
 <!-- ============================================================== -->
 <!-- Content -->
 <!-- ============================================================== -->
 <div class="p-10" style="background-color:white;">
+    <div class="row m-0">
+        <div class="col-sm-3 pt-2">
+            <select class="form-control" id="tahun">
+                <option selected value="">--- Pilih Tahun ---</option>
+                @for ($tahun = 2016; $tahun <= date('Y'); $tahun++)
+                <option value="{{$tahun}}">{{$tahun}}</option>
+                @endfor
+            </select>
+        </div>
+        <div class="col-sm-3 pt-2">
+            <select class="form-control" id="bulan">
+                <option selected value="">--- Pilih Bulan ---</option>
+                @for ($bulan = 1; $bulan <= 12; $bulan++)
+                <option value="{{$bulan}}">
+                    @php 
+                    switch ($bulan) {
+                        case "1":
+                            echo "Januari";
+                            break;
+                        case "2":
+                            echo "Februari";
+                            break;
+                        case "3":
+                            echo "Maret";
+                            break;
+                        case "4":
+                            echo "April";
+                            break;
+                        case "5":
+                            echo "Mei";
+                            break;
+                        case "6":
+                            echo "Juni";
+                            break;
+                        case "7":
+                            echo "Juli";
+                            break;
+                        case "8":
+                            echo "Agustus";
+                            break;
+                        case "9":
+                            echo "September";
+                            break;
+                        case "10":
+                            echo "Oktober";
+                            break;
+                        case "11":
+                            echo "November";
+                            break;
+                        case "12":
+                            echo "Desember";
+                            break;
+                        default:
+                            echo "Bulan tidak ada";
+                        }
+                    @endphp
+                </option>
+                @endfor
+            </select>
+        </div>
+        <div class="col-sm-3 pt-2">
+            <button type="button" class="btn btn-success" onclick="search()"><i class="mdi mdi-magnify mr-2"></i>Search</button>
+            <button type="button" class="btn btn-warning" onclick="resetDataTable()"><i class="mdi mdi-undo mr-2"></i>Reload</button>
+        </div>
+    </div>
     <div class="row p-0 m-0">
         <div class="col">
             <div class="table-responsive">
@@ -49,7 +113,17 @@
 @push('scripts')
 <script>
     getDataTables();
-    function getDataTables(){
+    function resetDataTable(){
+        $('#data_tables').DataTable().destroy();
+        $('#tahun').prop('selectedIndex',0);
+        $('#bulan').prop('selectedIndex',0);
+        getDataTables();
+    };
+    function search(){
+        $('#data_tables').DataTable().destroy();
+        getDataTables($('#tahun').val(),$('#bulan').val());
+    }
+    function getDataTables(tahun,bulan){
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
@@ -61,7 +135,9 @@
                 "dataType": "json",
                 "type": "POST",
                 "data": {
-                    "_token": "<?= csrf_token()?>"
+                    "_token": "<?= csrf_token()?>",
+                    bulan:bulan,
+                    tahun:tahun
                 }
             }
         });
