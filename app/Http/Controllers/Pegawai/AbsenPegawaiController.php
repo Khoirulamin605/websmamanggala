@@ -48,13 +48,20 @@ class AbsenPegawaiController{
                     }
                     $data_absen = DB::table('absen')->where('tanggal',$tglnow)->where('id_pegawai',$pegawai->id)->first();
                     if($data_absen){
-                        if($data_absen->masuk != '-' && $data_absen->pulang != '-'){
-                            $col[] = 'H';
-                        }else{
+                        if($data_absen->masuk != '-'){
+                            $col[] = 'HH';
+                        }
+                        // if($data_absen->masuk != '-' && $data_absen->pulang != '-'){
+                        //     $col[] = 'HH';
+                        // }
+                        // elseif ($data_absen->masuk != '-' || $data_absen->pulang != '-') {
+                        //     $col[] = 'H';
+                        // }
+                        else{
                             $col[] = 'A';
                         }
                     }else{
-                        $col[] = '-';
+                        $col[] = '';
                     }
                 }else{
                     $col[] = '';

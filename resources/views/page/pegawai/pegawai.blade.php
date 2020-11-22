@@ -28,6 +28,7 @@
                         <thead>
                             <tr>
                                 <th>Action</th>
+                                <th>Avatar</th>
                                 <th>Kode Pegawai</th>
                                 <th>Nama Pegawaai</th>
                                 <th>Lahir</th>
@@ -36,6 +37,7 @@
                                 <th>Alamat</th>
                                 <th>Pegawai</th>
                                 <th>Tugas Tambahan</th>
+                                <th>Email</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -49,7 +51,7 @@
     <div class="modal fade" id="addData" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addDataLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form id="form-insert" action="/pegawai/insert_pegawai">
+                <form id="form-insert" enctype="multipart/form-data" action="/pegawai/insert_pegawai">
 			        {{ csrf_field() }}
                     <div class="modal-header">
                         <h5 class="modal-title" id="addDataLabel">Form Insert Data Pegawaai</h5>
@@ -114,6 +116,20 @@
                         <div class="row m-0">
                             <div class="col-sm-6">
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input type="text" name="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <input type="password" name="password" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-sm-6">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Jabatan</label>
                                     <select class="form-control" name="jabatan">
                                         @foreach ($jabatan1 as $jabatan1)
@@ -129,6 +145,14 @@
                                         <option value="Active">Active</option>
                                         <option value="Non-Active">Non-Active</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Foto</label>
+                                    <input type="file" class="form-control" name="avatar"/>
                                 </div>
                             </div>
                         </div>
@@ -213,6 +237,20 @@
                         <div class="row m-0">
                             <div class="col-sm-6">
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input type="text" name="email" id="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <input type="password" name="password" id="password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-sm-6">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Jabatan</label>
                                     <select class="form-control" name="jabatan" id="jabatan">
                                         @foreach ($jabatan2 as $jabatan2)
@@ -228,6 +266,14 @@
                                         <option value="Active">Active</option>
                                         <option value="Non-Active">Non-Active</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Foto</label>
+                                    <input type="file" class="form-control" name="avatar"/>
                                 </div>
                             </div>
                         </div>
@@ -277,6 +323,7 @@
             ],
             "columns" : [
                 {"data": "action"},
+                {"data": "avatar"},
                 {"data": "kode_pegawai"},
                 {"data": "nama_pegawai"},
                 {"data": "lahir"},
@@ -285,6 +332,7 @@
                 {"data": "alamat"},
                 {"data": "pegawai"},
                 {"data": "tugas_tambahan"},
+                {"data": "email"},
                 {"data": "status"}
             ]
         });
@@ -296,10 +344,17 @@
         e.preventDefault()
         var form = $(this)
         var url = form.attr('action')
+        // var formData = new FormData($('form-insert')[0])
+        // console.log(formData)
         $.ajax({
-            type : "POST",
+            method : "POST",
             url : url,
-            data: form.serialize(),
+            dataType: 'json',
+            data: new FormData($('#form-insert')[0]),
+            contentType: false,
+            processData: false,
+            cache: false,
+            async: false,
             success: function(data){
                 if(data.status){
                     Swal.fire({
@@ -326,7 +381,7 @@
             }
         })
     });
-    function setData(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10){
+    function setData(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11){
         $("#id").val(data1);
         $("#kode_pegawai").val(data2);
         $("#nama_pegawai").val(data3);
@@ -337,15 +392,22 @@
         $("#alamat").val(data8);
         $("#jabatan").val(data9);
         $("#status").val(data10);
+        $("#email").val(data11);
+        // $("#password").val(data12);
     }
     $('#form-update').on('submit',function(e){
         e.preventDefault()
         var form = $(this)
         var url = form.attr('action')
         $.ajax({
-            type : "POST",
+            method : "POST",
             url : url,
-            data: form.serialize(),
+            dataType: 'json',
+            data: new FormData($('#form-update')[0]),
+            contentType: false,
+            processData: false,
+            cache: false,
+            async: false,
             success: function(data){
                 if(data.status){
                     Swal.fire({

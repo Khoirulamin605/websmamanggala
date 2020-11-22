@@ -72,6 +72,11 @@
         getDataTables($('#periode').val());
     }
     function getDataTables(periode){
+        if (periode) {
+            var tanggal = periode;
+        }else{
+            var tanggal =  '<?=date('m-Y')?>';
+        }
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
@@ -91,12 +96,14 @@
                     {
                         "extend": 'excel',
                         className:'ml-3 btn-sm',
+                        "title" : 'Penggajian Pegawai '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }
                     },
                     {
                         "extend": 'pdf',
+                        "title" : 'Penggajian Pegawai '+tanggal,
                         className:'ml-3 btn-sm',
                         "exportOptions": {
                             "columns": ':not(.notexport)'

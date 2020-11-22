@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
+use GuzzleHttp\Client;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -36,7 +38,19 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        // parent::report($exception);
+
         parent::report($exception);
+        // $client  = new Client();
+        // $url = "https://api.telegram.org/bot".env("BOTTELEGRAM","806954216:AAGy32opLuacInlrTx36nuiVHazXzX8zFjk")."/sendMessage";//<== ganti jadi token yang kita tadi
+        // $data    = $client->request('GET', $url, [
+        //     'json' =>[
+        //       "chat_id" => env("BOTTELEGRAM_CHATID","741436337"), //<== ganti dengan id_message yang kita dapat tadi
+        //       "text" => "File : ".$exception->getFile()."\nLine : ".$exception->getLine()."\nCode : ".$exception->getCode()."\nMessage : ".$exception->getMessage(),"disable_notification" => true
+        //     ]
+        // ]);
+
+        // $json = $data->getBody();
     }
 
     /**

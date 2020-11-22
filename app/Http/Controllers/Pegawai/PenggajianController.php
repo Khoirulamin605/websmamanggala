@@ -26,9 +26,9 @@ class PenggajianController{
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
         $dir   = $request->input('order.0.dir');
-        
+        $month_now = date('m-yy');
         if(empty($request->periode)){
-            $data_search = DB::table('v_penggajian')->orderBy($order, $dir);
+            $data_search = DB::table('v_penggajian')->where('periode',$month_now)->orderBy($order, $dir);
         }else{;
             $data_search = DB::table('v_penggajian')
             ->where('periode', $request->periode)
