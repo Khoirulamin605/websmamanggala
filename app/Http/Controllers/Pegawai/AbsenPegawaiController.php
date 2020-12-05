@@ -22,10 +22,18 @@ class AbsenPegawaiController{
     public function detailAbsensi(Request $request){
         if(empty($request->bulan) && empty($request->tahun)){
             $bulan_ini = date("m-Y");
-            $hari = cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y'));
+            // $hari = cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y'));
+            $date = date('d');
+            $hari = 31;
+        }elseif($request->bulan.'-'.$request->tahun == date('m-Y')){
+            $bulan_ini = date("m-Y");
+            $date = date('d');
+            $hari = 31;
         }else{
             $bulan_ini = $request->bulan.'-'.$request->tahun;
-            $hari = cal_days_in_month(CAL_GREGORIAN,$request->bulan,$request->tahun);
+            // $hari = cal_days_in_month(CAL_GREGORIAN,$request->bulan,$request->tahun);
+            $date = 31;
+            $hari = 31;
         }
         // Limit
         $limit = $request->input('length');
@@ -46,7 +54,7 @@ class AbsenPegawaiController{
             $col = array();
             $col[] = $pegawai->nama_pegawai;
             for($tgl = 1; $tgl <= $hari; $tgl++){
-                if($tgl <= date('d')){
+                if($tgl <= $date){
                     if(strlen($tgl) == 1){
                         $tglnow = '0'.$tgl.'-'.$bulan_ini;
                     }else{

@@ -15,7 +15,8 @@
     </div>
 </div>
 @php
-    $jumlah_tanggal =  cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y'));
+    // $jumlah_tanggal =  cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y'));
+    $jumlah_tanggal = 31;
 @endphp
 <!-- ============================================================== -->
 <!-- Content -->
