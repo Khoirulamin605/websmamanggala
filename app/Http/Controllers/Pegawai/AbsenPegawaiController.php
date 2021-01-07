@@ -30,7 +30,11 @@ class AbsenPegawaiController{
             $date = date('d');
             $hari = 31;
         }else{
-            $bulan_ini = $request->bulan.'-'.$request->tahun;
+            if($request->bulan < 10){
+                $bulan_ini = '0'.$request->bulan.'-'.$request->tahun;
+            }else{
+                $bulan_ini = $request->bulan.'-'.$request->tahun;
+            }
             // $hari = cal_days_in_month(CAL_GREGORIAN,$request->bulan,$request->tahun);
             $date = 31;
             $hari = 31;
@@ -50,6 +54,7 @@ class AbsenPegawaiController{
 
         $data = array();
 
+        // dd($bulan_ini);
         foreach($posts as $pegawai){
             $col = array();
             $col[] = $pegawai->nama_pegawai;
@@ -62,20 +67,17 @@ class AbsenPegawaiController{
                     }
                     $data_absen = DB::table('absen')->where('tanggal',$tglnow)->where('id_pegawai',$pegawai->id)->first();
                     if($data_absen){
-                        if($data_absen->masuk != '-'){
+                        if($data_absen->masuk != '-' && $data_absen->pulang != '-'){
+                            $col[] = 'HH';
+                        }
+                        elseif($data_absen->masuk != '-'){
                             $col[] = 'H';
                         }
-                        // if($data_absen->masuk != '-' && $data_absen->pulang != '-'){
-                        //     $col[] = 'HH';
-                        // }
-                        // elseif ($data_absen->masuk != '-' || $data_absen->pulang != '-') {
-                        //     $col[] = 'H';
-                        // }
                         else{
                             $col[] = 'A';
                         }
                     }else{
-                        $col[] = '-';
+                        $col[] = '';
                     }
                 }else{
                     $col[] = '';
@@ -93,7 +95,7 @@ class AbsenPegawaiController{
     }
 
     public function getDataAbsen(Request $request){
-        $date_now = date('d-m-yy');
+        $date_now = date('d-m-Y');
         $columns = array(
             0 =>'id',
             1 =>'nama_pegawai',
@@ -158,7 +160,7 @@ class AbsenPegawaiController{
     public function bukaAbsen(){
 
         $this_day = date('N');
-        $thid_date = date('d-m-yy');
+        $thid_date = date('d-m-Y');
 
         $respError = FALSE;
         $respMesssage = '';
@@ -169,31 +171,28 @@ class AbsenPegawaiController{
         if($cek_data){
             $respMesssage = 'Absen Sudah dibuka';
         }else{
-            $data_pegawai = DB::table('v_jam')->where('hari', '=', $this_day)->get();
-            $data_pegawai_non_guru = DB::table('pegawai')->where('pegawai', '!=' , 1)->get();
+            // $data_pegawai = DB::table('v_jam')->where('hari', '=', $this_day)->get();
+            // $data_pegawai_non_guru = DB::table('pegawai')->where('pegawai', '!=' , 1)->get();
+
+            $pegawai = DB::table('pegawai')->where('status', '=' ,'Active')->get();
+
 
             $data_absen = array();
-            for($data_awal = 0; $data_awal <= count($data_pegawai)-1; $data_awal++){
+            for($data_awal = 0; $data_awal <= count($pegawai)-1; $data_awal++){
+                $cek_v_jam = DB::table('v_jam')->where('hari', '=', $this_day)->where('id_pegawai',$pegawai[$data_awal]->id)->first();
+                if($cek_v_jam){
+                    $jam = $cek_v_jam->jumlah_jam;
+                }else{
+                    $jam = 0;
+                }
                 $data_absen[] = [
-                    'id_pegawai' => $data_pegawai[$data_awal]->id_pegawai,
-                    'tanggal' => date('d-m-yy'),
+                    'id_pegawai' => $pegawai[$data_awal]->id,
+                    'tanggal' => date('d-m-Y'),
                     'masuk' => '-',
                     'pulang' => '-',
-                    'jumlah_jam' => $data_pegawai[$data_awal]->jumlah_jam,
+                    'jumlah_jam' => $jam,
                     'keterangan' => '',
-                    'bulan_tahun' => date('m-yy'),
-                    'id_qr' => $qr_id
-                ]; 
-            }
-            for($data_awal1 = 0; $data_awal1 <= count($data_pegawai_non_guru)-1; $data_awal1++){
-                $data_absen[] = [
-                    'id_pegawai' => $data_pegawai_non_guru[$data_awal1]->id,
-                    'tanggal' => date('d-m-yy'),
-                    'masuk' => '-',
-                    'pulang' => '-',
-                    'jumlah_jam' => 0,
-                    'keterangan' => '',
-                    'bulan_tahun' => date('m-yy'),
+                    'bulan_tahun' => date('m-Y'),
                     'id_qr' => $qr_id
                 ]; 
             }

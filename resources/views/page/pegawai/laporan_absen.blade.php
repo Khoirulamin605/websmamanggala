@@ -38,31 +38,31 @@
                 <option value="{{$bulan}}">
                     @php 
                     switch ($bulan) {
-                        case "1":
+                        case "01":
                             echo "Januari";
                             break;
-                        case "2":
+                        case "02":
                             echo "Februari";
                             break;
-                        case "3":
+                        case "03":
                             echo "Maret";
                             break;
-                        case "4":
+                        case "04":
                             echo "April";
                             break;
-                        case "5":
+                        case "05":
                             echo "Mei";
                             break;
-                        case "6":
+                        case "06":
                             echo "Juni";
                             break;
-                        case "7":
+                        case "07":
                             echo "Juli";
                             break;
-                        case "8":
+                        case "08":
                             echo "Agustus";
                             break;
-                        case "9":
+                        case "09":
                             echo "September";
                             break;
                         case "10":
