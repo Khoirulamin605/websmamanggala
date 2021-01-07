@@ -91,9 +91,11 @@
     search()
     function search(){
         $('#data_tables').DataTable().destroy();
-        getDataTables($('#search_jurusan').val(),$('#search_kelas').val(),$('#search_mapel').val(),$('#search_tahun').val(),$('#search_semester').val());
+        getDataTables($('#search_jurusan').val(),$('#search_kelas').val(),$('#search_mapel').val(),$('#search_tahun').val(),$('#search_semester').val(),$('#search_mapel option:selected').text());
     }
-    function getDataTables(search_jurusan,search_kelas,search_mapel,search_tahun,search_semester){
+    function getDataTables(search_jurusan,search_kelas,search_mapel,search_tahun,search_semester,siswa){
+        // console.log(siswa)
+        var tanggal = '<?=date('m-Y')?>';
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
@@ -117,6 +119,7 @@
                     {
                         "extend": 'excel',
                         className:'ml-3 btn-sm',
+                        "title" : 'Laporan Nilai '+siswa+' '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }
@@ -124,6 +127,7 @@
                     {
                         "extend": 'pdf',
                         className:'ml-3 btn-sm',
+                        "title" : 'Laporan Nilai '+siswa+' '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }

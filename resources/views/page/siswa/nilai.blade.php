@@ -245,6 +245,7 @@
         getDataTables($('#search_jurusan').val(),$('#search_kelas').val(),$('#search_mapel').val(),$('#search_tahun').val(),$('#search_semester').val());
     }
     function getDataTables(search_jurusan,search_kelas,search_mapel,search_tahun,search_semester){
+        var tanggal = '<?=date('m-Y')?>';
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
@@ -268,6 +269,7 @@
                     {
                         "extend": 'excel',
                         className:'ml-3 btn-sm',
+                        "title" : 'Nilai Siswa '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }
@@ -275,6 +277,7 @@
                     {
                         "extend": 'pdf',
                         className:'ml-3 btn-sm',
+                        "title" : 'Nilai Siswa '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }

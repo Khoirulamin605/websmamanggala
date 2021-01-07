@@ -56,6 +56,7 @@
         });
     }
     function getDataTables(){
+        var tanggal = '<?=date('d-m-Y')?>';
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
@@ -74,6 +75,7 @@
                     {
                         "extend": 'excel',
                         className:'ml-3 btn-sm',
+                        "title" : 'Absen Pegawai '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }
@@ -81,6 +83,7 @@
                     {
                         "extend": 'pdf',
                         className:'ml-3 btn-sm',
+                        "title" : 'Absen Pegawai '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }

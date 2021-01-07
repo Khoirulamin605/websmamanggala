@@ -404,6 +404,7 @@
     }
     getJurusan()
     function getDataTables(search_jurusan,search_kelas,search_siswa){
+        var tanggal = '<?=date('m-Y')?>';
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
@@ -425,6 +426,7 @@
                     {
                         "extend": 'excel',
                         className:'ml-3 btn-sm',
+                        "title" : 'Siswa Aktif '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }
@@ -432,6 +434,7 @@
                     {
                         "extend": 'pdf',
                         className:'ml-3 btn-sm',
+                        "title" : 'Siswa Aktif '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }
