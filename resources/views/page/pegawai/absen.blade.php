@@ -23,7 +23,7 @@
         <div class="col">
             <div class="table-responsive">
                 <button type="" class="btn btn-primary mt-2" onclick="bukaAbsensi()"><i class="mdi mdi-plus mr-2"></i> Buka Absen </button>
-                <a href="" id="link_qr" target="_blank" class="btn btn-success mt-2 disabled"><i class="mdi mdi-qrcode mr-2"></i> QRCode Absen </a>
+                {{-- <a href="" id="link_qr" target="_blank" class="btn btn-success mt-2 disabled"><i class="mdi mdi-qrcode mr-2"></i> QRCode Absen </a> --}}
                 <!-- <button type="" class="btn btn-success mt-2" data-toggle="modal" data-target="#importData"><i class="mdi mdi-file-excel mr-2"></i> Import </button> -->
                 <table id="data_tables" class="table table-striped table-bordered no-wrap">
                     <thead>
@@ -107,10 +107,10 @@
                     confirmButtonColor: '#3085d6',
                     allowOutsideClick :false,
                 }).then((result) => {
-                    window.open(`/get_qr_absen/${data.qr_id}`, '_blank');
+                    // window.open(`/get_qr_absen/${data.qr_id}`, '_blank');
                     if (result.value) {               
-                        $('#link_qr').removeClass('disabled');
-                        $('#link_qr').attr("href", `/get_qr_absen/${data.qr_id}`);
+                        // $('#link_qr').removeClass('disabled');
+                        // $('#link_qr').attr("href", `/get_qr_absen/${data.qr_id}`);
                         $('#data_tables').DataTable().ajax.reload();
                     }
                 })

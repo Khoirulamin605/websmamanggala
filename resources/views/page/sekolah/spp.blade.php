@@ -24,17 +24,60 @@
             <div class="col-sm-3 pt-2">
                 <select class="form-control" id="search_tahun">
                     <option selected value="">--- Pilih Tahun ---</option>
-                    @foreach ($tahun as $tahun)
-                        <option value="{{substr($tahun->periode, -4)}}">{{substr($tahun->periode, -4)}}</option>
-                    @endforeach
+                    @for ($tahun = 2016; $tahun <= date('Y'); $tahun++)
+                        <option value="{{$tahun}}">{{$tahun}}</option>
+                    @endfor
                 </select>
             </div>
             <div class="col-sm-3 pt-2">
                 <select class="form-control" id="search_bulan">
                     <option selected value="">--- Pilih Bulan ---</option>
-                    @for ($i = 1; $i < 13; $i++)
-                        <option value="{{$i}}">{{$i}}</option>
-                    @endfor
+                @for ($bulan = 1; $bulan <= 12; $bulan++)
+                <option value="{{$bulan}}">
+                    @php 
+                    switch ($bulan) {
+                        case "1":
+                            echo "Januari";
+                            break;
+                        case "2":
+                            echo "Februari";
+                            break;
+                        case "3":
+                            echo "Maret";
+                            break;
+                        case "4":
+                            echo "April";
+                            break;
+                        case "5":
+                            echo "Mei";
+                            break;
+                        case "6":
+                            echo "Juni";
+                            break;
+                        case "7":
+                            echo "Juli";
+                            break;
+                        case "8":
+                            echo "Agustus";
+                            break;
+                        case "9":
+                            echo "September";
+                            break;
+                        case "10":
+                            echo "Oktober";
+                            break;
+                        case "11":
+                            echo "November";
+                            break;
+                        case "12":
+                            echo "Desember";
+                            break;
+                        default:
+                            echo "Bulan tidak ada";
+                        }
+                    @endphp
+                </option>
+                @endfor
                 </select>
             </div>
             <div class="col-sm-3 pt-2">
@@ -114,6 +157,7 @@
         getDataTables($('#search_tahun').val(),$('#search_bulan').val(),$('#search_status').val());
     }
     function getDataTables(search_tahun,search_bulan,search_status) {
+        var tanggal = '<?=date('m-Y')?>';
         $('#data_tables').DataTable({
             lengthMenu: [[10, 50, 200, 1000], [10, 50, 200, 1000]],
             "processing": true,
@@ -135,6 +179,7 @@
                     {
                         "extend": 'excel',
                         className:'ml-3 btn-sm',
+                        "title" : 'Pembayaran SPP '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }
@@ -142,6 +187,7 @@
                     {
                         "extend": 'pdf',
                         className:'ml-3 btn-sm',
+                        "title" : 'Pembayaran SPP '+tanggal,
                         "exportOptions": {
                             "columns": ':not(.notexport)'
                         }

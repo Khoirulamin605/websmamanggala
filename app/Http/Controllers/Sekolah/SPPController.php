@@ -29,7 +29,9 @@ class SPPController{
         $dir   = $request->input('order.0.dir');
 
         if(empty($request->search_tahun) && empty($request->search_bulan) && empty($request->search_status)){
-            $data_search = DB::table('v_spp')->orderBy($order, $dir);
+            $mydate=getdate(date("U"));
+            $periode = $mydate['mon'].'/'.$mydate['year'];
+            $data_search = DB::table('v_spp')->where('periode', '=',$periode)->orderBy($order, $dir);
         }elseif($request->search_tahun && $request->search_bulan && $request->search_status){
             $periode = $request->search_bulan.'/'.$request->search_tahun;
             $data_search = DB::table('v_spp')
@@ -51,7 +53,7 @@ class SPPController{
             ->where('status', '=', $request->search_status)
             ->orderBy($order, $dir);
         }else{
-            dd('as');
+            // dd('as');
             $search = $request->input('search.value');
             $data_search = DB::table('v_spp')
             ->where('nama_siswa', 'like', "%{$search}%")
@@ -80,7 +82,7 @@ class SPPController{
                 }
                 // $nestedData['id'] =  $row->no_induk;
                 $nestedData['nama_siswa'] =  $row->nama_siswa;
-                $nestedData['periode'] =  $row->periode;
+                $nestedData['periode'] =  $this->format_bulan($row->periode);
                 $nestedData['tgl_bayar'] =  $row->tgl_bayar;
                 $nestedData['nominal'] =  $row->nominal;
                 $nestedData['status'] =  $row->status;
@@ -156,5 +158,52 @@ class SPPController{
         );
 
         return response()->json($response);
+    }
+
+    public function format_bulan($date){
+        $bulan = explode("/",$date);
+        $periode = '';
+
+        switch ($bulan[0]) {
+            case "1":
+                $periode = "Januari-".$bulan[1];
+                break;
+            case "2":
+                $periode =  "Februari-".$bulan[1];
+                break;
+            case "3":
+                $periode =  "Maret-".$bulan[1];
+                break;
+            case "4":
+                $periode =  "April-".$bulan[1];
+                break;
+            case "5":
+                $periode =  "Mei-".$bulan[1];
+                break;
+            case "6":
+                $periode =  "Juni-".$bulan[1];
+                break;
+            case "7":
+                $periode =  "Juli-".$bulan[1];
+                break;
+            case "8":
+                $periode =  "Agustus-".$bulan[1];
+                break;
+            case "9":
+                $periode =  "September-".$bulan[1];
+                break;
+            case "10":
+                $periode =  "Oktober-".$bulan[1];
+                break;
+            case "11":
+                $periode =  "November-".$bulan[1];
+                break;
+            case "12":
+                $periode =  "Desember-".$bulan[1];
+                break;
+            default:
+                $periode =  "Not Read";
+            }
+        return $periode;
     }
 }
