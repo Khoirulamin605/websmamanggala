@@ -203,7 +203,7 @@ class ListSiswaController{
             ->orWhere('jenis_kelamin', 'like', "%{$search}%")
             ->orWhere('alamat', 'like', "%{$search}%")
             ->orWhere('wali', 'like', "%{$search}%")
-            ->orWhere('tanggal_keluar', 'like', "%{$search}%")
+            ->orWhere('status_lulus', 'like', "%{$search}%")
             ->orderBy($order, $dir);
         }
 
@@ -224,7 +224,7 @@ class ListSiswaController{
                 $nestedData['alamat'] =  $row->alamat;
                 $nestedData['jenis_kelamin'] =  $row->jenis_kelamin;
                 $nestedData['wali'] =  $row->wali;
-                $nestedData['tanggal_keluar'] =  $row->tanggal_keluar;
+                $nestedData['tanggal_keluar'] =  $row->status_lulus;
                 $nestedData['action'] =  "<button class='btn btn-outline-success btn-sm' data-toggle='modal'
                                             onClick=\"setData('$row->no_induk','$row->nama_siswa','$row->tempat_lahir','$row->tanggal_lahir','$row->jenis_kelamin','$row->alamat','$row->kelas','$row->nama_jurusan','$row->status_aktif','$row->wali','$row->tanggal_keluar')\"
                                             data-target='#viewSiswa'>Lihat Detail</button>";
@@ -430,7 +430,9 @@ class ListSiswaController{
         }else{
             if($request->kelas_lanjut == "Lulus"){
                 $result = DB::table('siswa')->where('kelas', $request->kelas_asal)->update([
-                    'status_aktif' => $request->kelas_lanjut
+                    'status_aktif' => $request->kelas_lanjut,
+                    'kelas' => null,
+                    'status_lulus' => date('Y')
                 ]);
             }else{
                 $result = DB::table('siswa')->where('kelas', $request->kelas_asal)->update([
@@ -438,8 +440,10 @@ class ListSiswaController{
                 ]);
             }
             if($result){
+                $respError = TRUE;
                 $respMesssage = 'Menaikan kelas berhasil';
             }else{
+                $respError = FALSE;
                 $respMesssage = 'Menaikan kelas gagal';
             }
         }
