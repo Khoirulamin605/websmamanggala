@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 Route::get('logout', 'Auth\LoginController@logout');
 Route::post('loginuser', 'Auth\LoginController@goLogin');
+Route::get('fake_absen', 'Pegawai\PenggajianController@fake_absen');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {

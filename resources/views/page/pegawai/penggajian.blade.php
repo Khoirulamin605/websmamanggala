@@ -20,14 +20,14 @@
 <!-- ============================================================== -->
 <div class="p-10" style="background-color:white;">
     <div class="row m-0">
-        <div class="col-sm-6 pt-2">
+        {{-- <div class="col-sm-6 pt-2">
             <button type="" class="btn btn-primary mt-2" onclick="bukaPenggajian()"><i class="mdi mdi-plus mr-2"></i> Buka Penggajian </button>
-        </div>
+        </div> --}}
         <div class="col-sm-3 pt-2">
             <select class="form-control" id="periode">
                 <option selected value="">--- Pilih Periode ---</option>
                 @foreach ($periode as $periode)
-                    <option value="{{$periode->periode}}">{{$periode->periode}}</option>
+                    <option value="{{$periode->bulan_tahun}}">{{$periode->bulan_tahun}}</option>
                 @endforeach
             </select>
         </div>

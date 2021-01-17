@@ -70,8 +70,11 @@ class AbsenPegawaiController{
                         if($data_absen->masuk != '-' && $data_absen->pulang != '-'){
                             $col[] = 'HH';
                         }
-                        elseif($data_absen->masuk != '-'){
-                            $col[] = 'H';
+                        elseif($data_absen->masuk != '-' && $data_absen->pulang != '-'){
+                            $col[] = 'H-';
+                        }
+                        elseif($data_absen->masuk == '-' && $data_absen->pulang == '-'){
+                            $col[] = '-';
                         }
                         else{
                             $col[] = 'A';
@@ -307,4 +310,5 @@ class AbsenPegawaiController{
         }
         return response()->json($result);
     }
+
 }
